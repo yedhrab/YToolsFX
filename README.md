@@ -28,9 +28,11 @@ Kişisel araçlarımı derlediğin JavaFX GUI'si.
 
 ## Yapılacaklar
 
-- [ ] Butonlara buton oldukları belli edilecek :D
-- [ ] Gereksiz GUI'ler kaldırılacak
-- [ ] Codebank özelliği eklenecek ve firebase'e bağlanacak
+- [ ] Default butonlar ayarlanacak 🔮
+- [ ] Butonlara buton oldukları belli edilecek 😅
+- [ ] Gereksiz GUI'ler kaldırılacak 🧹
+- [ ] Codebank özelliği eklenecek ve firebase'e bağlanacak 🔥
+- [ ] Belki animasyon ve gölgelendirme eklenir 🤔
 
 ## Destek ve İletişim
 
