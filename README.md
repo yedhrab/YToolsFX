@@ -2,11 +2,14 @@
 
 Kişisel araçlarımı derlediğin JavaFX GUI'si.
 
-## Hazırlanma
-
 > Java 12'nin son sürümü ile yazılmıştır.
 
-- Project Structure - Project - Language Level 12
+## Örnek Görüntü
+
+![app](res/app.gif)
+
+## Hazırlanma
+
 - Project Structures <kbd>CTRL</kbd> + <kbd>ALT</kbd> + <kbd>SHIFT</kbd> + <kbd>S</kbd>
 - `Project` - `Project Language Level` - `12`
 - `Modules` - `+` - `Library` ile `lib` dizinindeki modülleri ekleyin
