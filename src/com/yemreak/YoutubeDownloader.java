@@ -27,24 +27,32 @@ class YoutubeDownloader {
     static ArrayList<String> getDatas(String type) {
         final ArrayList<String> wantedDataList = new ArrayList<>();
         dataList.forEach(data ->
-            wantedDataList.add(
-               switch (type) {
-                   case "formatCode" -> data.formatCode;
-                   case "extension" -> data.extension;
-                   case "type" -> data.type;
-                   case "resolution" -> data.resolution;
-                   case "size" -> data.size;
-                   default -> "";
-               }
-           )
+                wantedDataList.add(
+                        switch (type) {
+                            case "formatCode" -> data.formatCode;
+                            case "extension" -> data.extension;
+                            case "type" -> data.type;
+                            case "resolution" -> data.resolution;
+                            case "size" -> data.size;
+                            default -> "";
+                        }
+                )
         );
 
         return wantedDataList;
     }
 
+    static void flushData() {
+        dataList.clear();
+    }
+
+    // TODO: Thread olmalı, yoksa program kitleniyor
     static void loadVideoInfo(String url) throws IOException {
-        ArrayList<String> outString = Utility.executeCommand("youtube-dl -F " + url);
+        System.out.println(url);
+        ArrayList<String> outString = Utility.executeCommand("youtube-dl -F \"" + url + "\"");
+        System.out.println(outString);
         parseOutput(outString);
+        System.out.println(dataList);
     }
 
     private static String[] splitOutLine(String outLine) {
@@ -69,7 +77,7 @@ class YoutubeDownloader {
         return type;
     }
 
-    private static void parseOutput(ArrayList<String>  lines) {
+    private static void parseOutput(ArrayList<String> lines) {
         // Ses ve video seçmezse en uygun kanalı (son input olur, formatsız indirilir) indir.
         // 2 audio değilse 2 (res) ile 3 (144p vs.) 'ü al
         // Son parçayı `,` ile ayır. En sondaki MiB bir öncekinde "video only" yok ise seslidir

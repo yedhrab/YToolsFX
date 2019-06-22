@@ -40,10 +40,15 @@ public class FXMLController {
     }
 
     @FXML
-    void loadVİdeoFromClipboard() throws IOException, UnsupportedFlavorException {
+    void loadVideoFromClipboard() throws IOException, UnsupportedFlavorException {
         String url = Utility.getClipboard();
         YoutubeDownloader.loadVideoInfo(url);
         // TODO: burada kalındı
+    }
+
+    @FXML
+    void cleanLoadedVideo() {
+        YoutubeDownloader.flushData();
     }
 
     @FXML
