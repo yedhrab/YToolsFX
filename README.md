@@ -8,7 +8,6 @@ Kişisel araçlarımı derlediğin JavaFX GUI'si.
 
 - [Örnek Görüntü](#%C3%96rnek-G%C3%B6r%C3%BCnt%C3%BC)
 - [Hazırlanma](#Haz%C4%B1rlanma)
-- [Yapılacaklar](#Yap%C4%B1lacaklar)
 - [Destek ve İletişim](#Destek-ve-%C4%B0leti%C5%9Fim)
 
 ## Örnek Görüntü
@@ -25,14 +24,6 @@ Kişisel araçlarımı derlediğin JavaFX GUI'si.
 - `--module-path "lib\javafx-sdk-12.0.1\lib" --add-modules=javafx.controls,javafx.fxml`
 
 > Kaynak için [buraya](https://openjfx.io/openjfx-docs/#install-javafx) bakabilirsin.
-
-## Yapılacaklar
-
-- [ ] Default butonlar ayarlanacak 🔮
-- [ ] Butonlara buton oldukları belli edilecek 😅
-- [ ] Gereksiz GUI'ler kaldırılacak 🧹
-- [ ] Codebank özelliği eklenecek ve firebase'e bağlanacak 🔥
-- [ ] Belki animasyon ve gölgelendirme eklenir 🤔
 
 ## Destek ve İletişim
 
