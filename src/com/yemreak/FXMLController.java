@@ -2,6 +2,7 @@ package com.yemreak;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -15,8 +16,10 @@ public class FXMLController {
 
     static boolean isMouseDragging = false;
 
+    private Image oldImage;
+
     @FXML
-    private ImageView iv_drive, iv_info, iv_youtube;
+    private ImageView iv_drive, iv_info, iv_youtube, ivYoutubeVideoPreview;
 
     @FXML
     private AnchorPane drivePane, infoPane, youtubePane;
@@ -43,12 +46,20 @@ public class FXMLController {
     void loadVideoFromClipboard() throws IOException, UnsupportedFlavorException {
         String url = Utility.getClipboard();
         YoutubeDownloader.loadVideoInfo(url);
+        String filename = YoutubeDownloader.downloadVideoThumbnail(url);
+        ivYoutubeVideoPreview.setLayoutX(94);
+        ivYoutubeVideoPreview.setLayoutY(128);
+        oldImage = ivYoutubeVideoPreview.getImage();
+        ivYoutubeVideoPreview.setImage(Utility.getImageFromFile(filename));
+        Utility.deleteFile(filename);
         // TODO: burada kalındı
     }
 
     @FXML
     void cleanLoadedVideo() {
+
         YoutubeDownloader.flushData();
+        if (oldImage != null) ivYoutubeVideoPreview.setImage(oldImage);
     }
 
     @FXML

@@ -48,11 +48,17 @@ class YoutubeDownloader {
 
     // TODO: Thread olmalı, yoksa program kitleniyor
     static void loadVideoInfo(String url) throws IOException {
-        System.out.println(url);
-        ArrayList<String> outString = Utility.executeCommand("youtube-dl -F \"" + url + "\"");
-        System.out.println(outString);
+        String command = "youtube-dl -F \"" + url + "\"";
+        ArrayList<String> outString = Utility.executeCommand(command);
         parseOutput(outString);
-        System.out.println(dataList);
+    }
+
+    static String downloadVideoThumbnail(String url) throws IOException {
+        String command = "youtube-dl --write-thumbnail --skip-download \"" + url + "\"";
+        ArrayList<String> outString = Utility.executeCommand(command);
+
+        String[] split = outString.get(outString.size() - 1).split(": ");
+        return split[split.length - 1];
     }
 
     private static String[] splitOutLine(String outLine) {

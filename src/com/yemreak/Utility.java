@@ -1,11 +1,14 @@
 package com.yemreak;
 
-import java.awt.*;
+import javafx.scene.image.Image;
+
+import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -39,5 +42,15 @@ class Utility {
         }
 
         return lines;
+    }
+
+    static Image getImageFromFile(String filepath) {
+        System.out.println(filepath);
+        File file = new File(filepath);
+        return new Image(file.toURI().toString());
+    }
+
+    static void deleteFile(String filepath) throws IOException {
+        executeCommand("del \"" + filepath + "\"");
     }
 }
