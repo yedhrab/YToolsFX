@@ -1,8 +1,8 @@
-package com.yemreak;
+package services;
 
 import javafx.scene.image.Image;
 
-import java.awt.Toolkit;
+import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.StringSelection;
@@ -13,24 +13,24 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-class Utility {
+public abstract class Utility {
 
-    static void putClipboard(String clipboardString) {
+    public static void putClipboard(String clipboardString) {
         StringSelection stringSelection = new StringSelection(clipboardString);
         Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
         clipboard.setContents(stringSelection, null);
     }
 
-    static String getClipboard() throws IOException, UnsupportedFlavorException {
+    public static String getClipboard() throws IOException, UnsupportedFlavorException {
         Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
         return (String) clipboard.getData(DataFlavor.stringFlavor);
     }
 
-    static String makeLinkDirect(String link) {
+    public static String makeLinkDirect(String link) {
         return link.replace("open?", "uc?export=download&");
     }
 
-    static ArrayList<String> executeCommand(String command) throws IOException {
+    public static ArrayList<String> executeCommand(String command) throws IOException {
         Process process = Runtime.getRuntime().exec(command);
         BufferedReader stdInput = new BufferedReader(new InputStreamReader(process.getInputStream()));
 
@@ -44,13 +44,12 @@ class Utility {
         return lines;
     }
 
-    static Image getImageFromFile(String filepath) {
-        System.out.println(filepath);
-        File file = new File(filepath);
+    public static Image getImageFromFile(String filePath) {
+        File file = new File(filePath);
         return new Image(file.toURI().toString());
     }
 
-    static void deleteFile(String filepath) throws IOException {
-        executeCommand("del \"" + filepath + "\"");
+    public static boolean deleteFile(String filePath) {
+        return new File(filePath).delete();
     }
 }

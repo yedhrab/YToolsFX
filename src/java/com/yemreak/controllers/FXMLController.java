@@ -1,4 +1,4 @@
-package com.yemreak;
+package controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
@@ -6,17 +6,17 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import services.Cache;
+import services.Utility;
+import services.YoutubeDownloader;
 
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
-import java.util.ArrayList;
 
 
 public class FXMLController {
 
-    static boolean isMouseDragging = false;
-
-    private Image oldImage;
+    public static boolean isMouseDragging = false;
 
     @FXML
     private ImageView iv_drive, iv_info, iv_youtube, ivYoutubeVideoPreview;
@@ -43,23 +43,38 @@ public class FXMLController {
     }
 
     @FXML
-    void loadVideoFromClipboard() throws IOException, UnsupportedFlavorException {
-        String url = Utility.getClipboard();
-        YoutubeDownloader.loadVideoInfo(url);
-        String filename = YoutubeDownloader.downloadVideoThumbnail(url);
-        ivYoutubeVideoPreview.setLayoutX(94);
-        ivYoutubeVideoPreview.setLayoutY(128);
-        oldImage = ivYoutubeVideoPreview.getImage();
-        ivYoutubeVideoPreview.setImage(Utility.getImageFromFile(filename));
-        Utility.deleteFile(filename);
+    void loadVideoFromClipboard() {
+        Image thumbnail = ivYoutubeVideoPreview.getImage();
+        Cache.create("thumbnail", thumbnail);
+
+        ivYoutubeVideoPreview.setImage(Utility.getImageFromFile("src/asset/loading_spinner.gif"));
+
+        try {
+            String url = Utility.getClipboard(); // TODO: Classnotfound hatası var
+            YoutubeDownloader.loadVideo(url);
+
+            if (YoutubeDownloader.getThumbnail() != null) {
+                thumbnail = YoutubeDownloader.getThumbnail();
+            }
+        } catch (IOException | UnsupportedFlavorException e) {
+            e.printStackTrace();
+        }
+
+        ivYoutubeVideoPreview.setImage(thumbnail);
         // TODO: burada kalındı
     }
 
     @FXML
-    void cleanLoadedVideo() {
+    void onVideoThumbnailClicked() {
+
+    }
+
+    @FXML
+    void clearLoadedVideo() {
 
         YoutubeDownloader.flushData();
-        if (oldImage != null) ivYoutubeVideoPreview.setImage(oldImage);
+        Image thumbnailCache = (Image) Cache.get("thumbnail", null);
+        if (thumbnailCache != null) ivYoutubeVideoPreview.setImage(thumbnailCache);
     }
 
     @FXML
@@ -72,7 +87,6 @@ public class FXMLController {
 
     @FXML
     void createDirectLink() {
-        System.out.println("createDirectLink");
         txt_directLink.setText(Utility.makeLinkDirect(txt_gDriveLink.getText()));
     }
 

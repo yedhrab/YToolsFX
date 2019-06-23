@@ -8,6 +8,9 @@ Kişisel araçlarımı derlediğin JavaFX GUI'si.
 
 - [Örnek Görüntü](#%C3%96rnek-G%C3%B6r%C3%BCnt%C3%BC)
 - [Hazırlanma](#Haz%C4%B1rlanma)
+  - [Java12 Fonksiyonları Aktif Etme](#Java12-Fonksiyonlar%C4%B1-Aktif-Etme)
+  - [Bağımlılıkları Dahil Etme](#Ba%C4%9F%C4%B1ml%C4%B1l%C4%B1klar%C4%B1-Dahil-Etme)
+  - [Dosyaları Yapılandırma](#Dosyalar%C4%B1-Yap%C4%B1land%C4%B1rma)
 - [Destek ve İletişim](#Destek-ve-%C4%B0leti%C5%9Fim)
 
 ## Örnek Görüntü
@@ -16,12 +19,25 @@ Kişisel araçlarımı derlediğin JavaFX GUI'si.
 
 ## Hazırlanma
 
-- Project Structures <kbd>CTRL</kbd> + <kbd>ALT</kbd> + <kbd>SHIFT</kbd> + <kbd>S</kbd>
-- `Project` - `Project Language Level` - `12`
-- `Modules` - `+` - `Library` ile `lib` dizinindeki modülleri ekleyin
+> Project Structures <kbd>CTRL</kbd> + <kbd>ALT</kbd> + <kbd>SHIFT</kbd> + <kbd>S</kbd>
+
+### Java12 Fonksiyonları Aktif Etme
+
+- `Project Structure` - `Project` - `Project Language Level` - `12`
+
+### Bağımlılıkları Dahil Etme
+
+- `Project Structure` - `Modules` - `+` - `Library` ile `lib` dizinindeki modülleri ekleyin
 - JavaFX, JFoenix kütüphaneleri dahil edin (jmods edilmeyecek)
 - `Edit configuration` ile `VM Options` alanına alttaki metni yazın:
 - `--module-path "lib\javafx-sdk-12.0.1\lib" --add-modules=javafx.controls,javafx.fxml`
+
+### Dosyaları Yapılandırma
+
+- `Project Structure` - `Project Settings` - `Modules`
+- `Source` sekmesinde alttaki gibi ayarlayın
+
+![intellij_res_file](res/intellij_res_file.png)
 
 > Kaynak için [buraya](https://openjfx.io/openjfx-docs/#install-javafx) bakabilirsin.
 

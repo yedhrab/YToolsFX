@@ -1,30 +1,32 @@
-package com.yemreak;
+package services;
+
+import javafx.scene.image.Image;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
-class YoutubeDownloader {
+public abstract class YoutubeDownloader {
     private static final ArrayList<YData> dataList = new ArrayList<>();
+    private static Image thumbnail = null;
+    private static String url = null;
 
-    private static class YData {
-        final String formatCode;
-        final String extension;
-        final String type;
-        final String resolution;
-        final String size;
-
-        YData(String formatCode, String extension, String type, String resolution, String size) {
-            this.formatCode = formatCode;
-            this.extension = extension;
-            this.type = type;
-            this.resolution = resolution;
-            this.size = size;
-        }
+    /**
+     * Saklanan verileri temizleme
+     * TODO: Her yeni veri eklendiğinde buraya da eklenmeli
+     */
+    public static void flushData() {
+        dataList.clear();
+        thumbnail = null;
+        url = null;
     }
 
-    static ArrayList<String> getDatas(String type) {
+    public static Image getThumbnail() {
+        return thumbnail;
+    }
+
+    public static ArrayList<String> getDatas(String type) {
         final ArrayList<String> wantedDataList = new ArrayList<>();
         dataList.forEach(data ->
                 wantedDataList.add(
@@ -42,25 +44,40 @@ class YoutubeDownloader {
         return wantedDataList;
     }
 
-    static void flushData() {
-        dataList.clear();
+    public static void update() throws IOException {
+        Utility.executeCommand("youtube-dl -U");
+    }
+
+    public static void loadVideo(String url) throws IOException {
+        boolean videoExist = loadVideoInfo(url);
+        if (videoExist) {
+            loadVideoThumbnail(url);
+        }
     }
 
     // TODO: Thread olmalı, yoksa program kitleniyor
-    static void loadVideoInfo(String url) throws IOException {
+    private static boolean loadVideoInfo(String url) throws IOException {
         String command = "youtube-dl -F \"" + url + "\"";
         ArrayList<String> outString = Utility.executeCommand(command);
+
+        if (outString.isEmpty()) {
+            return false;
+        }
+
         parseOutput(outString);
+        return true;
     }
 
-    static String downloadVideoThumbnail(String url) throws IOException {
-        String command = "youtube-dl --write-thumbnail --skip-download \"" + url + "\"";
-        ArrayList<String> outString = Utility.executeCommand(command);
+    private static void loadVideoThumbnail(String url) throws IOException {
+        String command = "youtube-dl -q -o thumbnail.jpg --write-thumbnail --skip-download \"" + url + "\"";
+        Utility.executeCommand(command);
 
-        String[] split = outString.get(outString.size() - 1).split(": ");
-        return split[split.length - 1];
+        thumbnail = Utility.getImageFromFile("thumbnail.jpg");
+
+        Utility.deleteFile("thumbnail.jpg");
     }
 
+    // https://www.youtube.com/watch?v=5ANH_jvyOmA
     private static String[] splitOutLine(String outLine) {
         String[] split1 = outLine.split("\\s{2,}");
         String[] split2 = split1[split1.length - 1].split(",");
@@ -110,5 +127,21 @@ class YoutubeDownloader {
             }
         });
 
+    }
+
+    private static class YData {
+        final String formatCode;
+        final String extension;
+        final String type;
+        final String resolution;
+        final String size;
+
+        YData(String formatCode, String extension, String type, String resolution, String size) {
+            this.formatCode = formatCode;
+            this.extension = extension;
+            this.type = type;
+            this.resolution = resolution;
+            this.size = size;
+        }
     }
 }

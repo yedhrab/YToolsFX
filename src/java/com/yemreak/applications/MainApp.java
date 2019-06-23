@@ -1,5 +1,6 @@
-package com.yemreak;
+package applications;
 
+import controllers.FXMLController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -19,7 +20,7 @@ public class MainApp extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("main.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/views/main.fxml"));
 
         primaryStage.initStyle(StageStyle.TRANSPARENT); // Windows çerçevesini kaldırır
 
@@ -38,7 +39,7 @@ public class MainApp extends Application {
         });
 
         root.setOnMouseDragged(mouseEvent -> {
-            FXMLController.isMouseDragging = true;
+            FXMLController.isMouseDragging= true;
 
             primaryStage.setX(mouseEvent.getScreenX() - xOffset);
             primaryStage.setY(mouseEvent.getScreenY() - yOffset);
