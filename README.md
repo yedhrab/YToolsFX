@@ -37,7 +37,7 @@ Kişisel araçlarımı derlediğin JavaFX GUI'si.
 - `Project Structure` - `Project Settings` - `Modules`
 - `Source` sekmesinde alttaki gibi ayarlayın
 
-![intellij_res_file](res/intellij_res_file.png)
+![](res/intellij_res_file.png)
 
 > Kaynak için [buraya](https://openjfx.io/openjfx-docs/#install-javafx) bakabilirsin.
 
