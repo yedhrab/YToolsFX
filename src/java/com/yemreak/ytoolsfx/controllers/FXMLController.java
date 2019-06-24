@@ -12,6 +12,7 @@ import services.YoutubeDownloader;
 
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
+import java.net.URISyntaxException;
 
 
 public class FXMLController {
@@ -47,11 +48,11 @@ public class FXMLController {
         Image thumbnail = ivYoutubeVideoPreview.getImage();
         Cache.create("thumbnail", thumbnail);
 
-        ivYoutubeVideoPreview.setImage(Utility.getImageFromFile("src/asset/loading_spinner.gif"));
+        ivYoutubeVideoPreview.setImage(Utility.createImage("/gifs/loading_spinner.gif"));
 
         try {
-            String url = Utility.getClipboard(); // TODO: Classnotfound hatası var
-            YoutubeDownloader.loadVideo(url);
+            String url = Utility.getClipboard();
+            // YoutubeDownloader.loadVideo(url); // TODO: Bundan dolayı yükleniyor gifi ekrana gelmiyor
 
             if (YoutubeDownloader.getThumbnail() != null) {
                 thumbnail = YoutubeDownloader.getThumbnail();
@@ -65,8 +66,8 @@ public class FXMLController {
     }
 
     @FXML
-    void onVideoThumbnailClicked() {
-
+    void onVideoThumbnailClicked() throws IOException, URISyntaxException {
+        Utility.openInDefaultBrowser(YoutubeDownloader.getUrl());
     }
 
     @FXML

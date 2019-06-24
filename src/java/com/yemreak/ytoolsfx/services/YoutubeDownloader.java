@@ -22,10 +22,6 @@ public abstract class YoutubeDownloader {
         url = null;
     }
 
-    public static Image getThumbnail() {
-        return thumbnail;
-    }
-
     public static ArrayList<String> getDatas(String type) {
         final ArrayList<String> wantedDataList = new ArrayList<>();
         dataList.forEach(data ->
@@ -127,6 +123,14 @@ public abstract class YoutubeDownloader {
             }
         });
 
+    }
+
+    public static Image getThumbnail() {
+        return thumbnail;
+    }
+
+    public static String getUrl() {
+        return url;
     }
 
     private static class YData {
