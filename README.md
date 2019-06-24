@@ -11,6 +11,7 @@ Kişisel araçlarımı derlediğin JavaFX GUI'si.
   - [Java12 Fonksiyonları Aktif Etme](#Java12-Fonksiyonlar%C4%B1-Aktif-Etme)
   - [Dosyaları Yapılandırma](#Dosyalar%C4%B1-Yap%C4%B1land%C4%B1rma)
   - [Bağımlılıkları Dahil Etme](#Ba%C4%9F%C4%B1ml%C4%B1l%C4%B1klar%C4%B1-Dahil-Etme)
+  - [Scene Builder ile Tasarım Ayarı](#Scene-Builder-ile-Tasar%C4%B1m-Ayar%C4%B1)
   - [Derleme Yapılandırması](#Derleme-Yap%C4%B1land%C4%B1rmas%C4%B1)
 - [Destek ve İletişim](#Destek-ve-%C4%B0leti%C5%9Fim)
 
@@ -47,6 +48,15 @@ Proje [JavaFX] ve [JFoenix] frameworkü üzerinden yapılmıştır.
 
 > Youtube indirici için [youtube-dl](https://yt-dl.org/downloads/2019.06.21/youtube-dl.exe) ve onun gerek duyduğu [Microsoft Visual C++ 2010 Redistributable Package (x86)](https://download.microsoft.com/download/5/B/C/5BC5DBB3-652D-4DCE-B14A-475AB85EEF6E/vcredist_x86.exe) paketi gereklidir.
 
+### Scene Builder ile Tasarım Ayarı
+
+[JFoenix] framework'ü kullanıldığından [Scene Builder]'ın library'lerine dahil edilmesi lazımdır.
+
+- Sol üst kısımda **Library** sekmesinin en sağındaki <kbd>⚙</kbd> tıklayın
+- <kbd>JAR/FXML Management</kbd> - <kbd>Add Library/FXML from file system</kbd> linkine tıklayın
+- İndirdiğiniz [JFoenix] dosyasının `jar`'ını bulup, seçin.
+- <kbd>Check All</kbd> ve <kbd>Built in</kbd> ayarları ile dahil edin.
+
 ### Derleme Yapılandırması
 
 <kbd>Edit configuration</kbd> alanına girin
@@ -71,6 +81,7 @@ Proje [JavaFX] ve [JFoenix] frameworkü üzerinden yapılmıştır.
 
 [javafx]: http://gluonhq.com/download/javafx-12-0-1-sdk-windows/
 [jfoenix]: https://search.maven.org/remotecontent?filepath=com/jfoenix/jfoenix/9.0.8/jfoenix-9.0.8.jar
+[scene builder]: https://gluonhq.com/products/scene-builder/thanks/?dl=/download/scene-builder-11-windows-x64/
 
 <!-- İletişim -->
 
