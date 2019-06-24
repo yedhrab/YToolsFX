@@ -9,8 +9,9 @@ Kişisel araçlarımı derlediğin JavaFX GUI'si.
 - [Örnek Görüntü](#%C3%96rnek-G%C3%B6r%C3%BCnt%C3%BC)
 - [Hazırlanma](#Haz%C4%B1rlanma)
   - [Java12 Fonksiyonları Aktif Etme](#Java12-Fonksiyonlar%C4%B1-Aktif-Etme)
-  - [Bağımlılıkları Dahil Etme](#Ba%C4%9F%C4%B1ml%C4%B1l%C4%B1klar%C4%B1-Dahil-Etme)
   - [Dosyaları Yapılandırma](#Dosyalar%C4%B1-Yap%C4%B1land%C4%B1rma)
+  - [Bağımlılıkları Dahil Etme](#Ba%C4%9F%C4%B1ml%C4%B1l%C4%B1klar%C4%B1-Dahil-Etme)
+  - [Derleme Yapılandırması](#Derleme-Yap%C4%B1land%C4%B1rmas%C4%B1)
 - [Destek ve İletişim](#Destek-ve-%C4%B0leti%C5%9Fim)
 
 ## Örnek Görüntü
@@ -23,14 +24,10 @@ Kişisel araçlarımı derlediğin JavaFX GUI'si.
 
 ### Java12 Fonksiyonları Aktif Etme
 
-- `Project Structure` - `Project` - `Project Language Level` - `12`
-
-### Bağımlılıkları Dahil Etme
-
-- `Project Structure` - `Modules` - `+` - `Library` ile `lib` dizinindeki modülleri ekleyin
-- JavaFX, JFoenix kütüphaneleri dahil edin (jmods edilmeyecek)
-- `Edit configuration` ile `VM Options` alanına alttaki metni yazın:
-- `--module-path "lib\javafx-sdk-12.0.1\lib" --add-modules=javafx.controls,javafx.fxml`
+- `Project Structure` - `Project` alanına girin
+- `Project SDK` java version 12.0.1
+- `Project Language Level` - `12`
+- `Project compiler output` ~\YToolsJava\out
 
 ### Dosyaları Yapılandırma
 
@@ -40,6 +37,20 @@ Kişisel araçlarımı derlediğin JavaFX GUI'si.
 ![](res/intellij_res_file.png)
 
 > Kaynak için [buraya](https://openjfx.io/openjfx-docs/#install-javafx) bakabilirsin.
+
+### Bağımlılıkları Dahil Etme
+
+- [JavaFX], [JFoenix] paketlerini indirin
+- `Project Structure` - `Modules` - `+` - `Library` ile JavaFX'in lib, JFoenix'in kendisini ekleyin
+
+### Derleme Yapılandırması
+
+- `Edit configuration` alanına girin
+- `Main class` yerine `apllicaitons.MainApp` yazın
+- `VM Options` alanına alttaki metni yazın:
+  - `--module-path "C:\Program Files\Java\javafx-sdk-12.0.1\lib" --add-modules=javafx.controls,javafx.fxml`
+
+> `C:\Program Files\Java\javafx-sdk-12.0.1` yerine sizin kendi JavaFX SDK yolunuzu yazın.
 
 ## Destek ve İletişim
 
@@ -52,6 +63,9 @@ Kişisel araçlarımı derlediğin JavaFX GUI'si.
 [![Destek](https://drive.google.com/uc?id=1zyU7JWlw4sJTOx46gJlHOfYBwGIkvMQs)][bağış anlık]
 
 [![Patreon](https://drive.google.com/uc?id=11YmCRmySX7v7QDFS62ST2JZuE70RFjDG)][bağış aylık]
+
+[javafx]: http://gluonhq.com/download/javafx-12-0-1-sdk-windows/
+[jfoenix]: https://search.maven.org/remotecontent?filepath=com/jfoenix/jfoenix/9.0.8/jfoenix-9.0.8.jar
 
 <!-- İletişim -->
 
