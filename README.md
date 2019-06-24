@@ -45,6 +45,8 @@ Proje [JavaFX] ve [JFoenix] frameworkü üzerinden yapılmıştır.
 - [JavaFX], [JFoenix] paketlerini indirin
 - <kbd>Project Structure</kbd> - <kbd>Modules</kbd> - <kbd>+</kbd> - <kbd>Library</kbd> ile JavaFX'in lib, JFoenix'in kendisini ekleyin
 
+> Youtube indirici için [youtube-dl](https://yt-dl.org/downloads/2019.06.21/youtube-dl.exe) ve onun gerek duyduğu [Microsoft Visual C++ 2010 Redistributable Package (x86)](https://download.microsoft.com/download/5/B/C/5BC5DBB3-652D-4DCE-B14A-475AB85EEF6E/vcredist_x86.exe) paketi gereklidir.
+
 ### Derleme Yapılandırması
 
 <kbd>Edit configuration</kbd> alanına girin
