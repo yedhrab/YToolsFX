@@ -67,7 +67,7 @@
         <Text fill="#979292" layoutX="67.0" layoutY="221.0" strokeType="OUTSIDE" strokeWidth="0.0" text="- Will copy link from clipboard" wrappingWidth="169.0" />
       <Button id="paste" defaultButton="true" layoutX="327.0" layoutY="105.0" mnemonicParsing="false" onMouseClicked="#onClipboardIconClicked" prefHeight="38.0" prefWidth="38.0" />
       <Button id="clear" cancelButton="true" layoutX="327.0" layoutY="40.0" mnemonicParsing="false" onMouseClicked="#clearGDirectLink" prefHeight="38.0" prefWidth="38.0" />
-      <Button id="clear" cancelButton="true" layoutX="253.0" layoutY="189.0" mnemonicParsing="false" onMouseClicked="#onQuickIconClicked" prefHeight="49.0" prefWidth="49.0" />
+      <Button id="quick" cancelButton="true" layoutX="253.0" layoutY="189.0" mnemonicParsing="false" onMouseClicked="#onQuickIconClicked" prefHeight="49.0" prefWidth="49.0" />
     </AnchorPane>
     <AnchorPane fx:id="infoPane" layoutY="70.0" prefHeight="395.0" prefWidth="382.0" styleClass="anchorPane" stylesheets="@../css/main.css" visible="false">
         <Label layoutX="161.0" layoutY="152.0" text="Author" textAlignment="CENTER" textFill="WHITE">
