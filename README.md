@@ -20,19 +20,19 @@ Kişisel araçlarımı derlediğin JavaFX GUI'si.
 
 ## Hazırlanma
 
-> Project Structures <kbd>CTRL</kbd> + <kbd>ALT</kbd> + <kbd>SHIFT</kbd> + <kbd>S</kbd>
+<kbd>Project Structures</kbd> kısmına erişme kısayolu: <kbd>CTRL</kbd> + <kbd>ALT</kbd> + <kbd>SHIFT</kbd> + <kbd>S</kbd>
 
 ### Java12 Fonksiyonları Aktif Etme
 
-- <kbd>Project Structure</kbd> - <kbd>Project</kbd> alanına girin
+<kbd>Project Structure</kbd> - <kbd>Project</kbd> alanına girin
+
 - **Project SDK** `java version 12.0.1`
 - **Project Language Level** - `12`
 - **Project compiler output** `~\YToolsJava\out`
 
 ### Dosyaları Yapılandırma
 
-- <kbd>Project Structure</kbd> - <kbd>Project Settings</kbd> - <kbd>Modules</kbd>
-- <kbd>Source</kbd> sekmesinde alttaki gibi ayarlayın
+<kbd>Project Structure</kbd> - <kbd>Project Settings</kbd> - <kbd>Modules</kbd> - <kbd>Source</kbd> sekmesinde alttaki gibi ayarlayın
 
 ![](res/intellij_res_file.png)
 
@@ -40,12 +40,15 @@ Kişisel araçlarımı derlediğin JavaFX GUI'si.
 
 ### Bağımlılıkları Dahil Etme
 
+Proje [JavaFX] ve [JFoenix] frameworkü üzerinden yapılmıştır.
+
 - [JavaFX], [JFoenix] paketlerini indirin
 - <kbd>Project Structure</kbd> - <kbd>Modules</kbd> - <kbd>+</kbd> - <kbd>Library</kbd> ile JavaFX'in lib, JFoenix'in kendisini ekleyin
 
 ### Derleme Yapılandırması
 
-- <kbd>Edit configuration</kbd> alanına girin
+<kbd>Edit configuration</kbd> alanına girin
+
 - **Main class** yerine `apllicaitons.MainApp` yazın
 - **VM Options** alanına alttaki metni yazın:
   - `--module-path "C:\Program Files\Java\javafx-sdk-12.0.1\lib" --add-modules=javafx.controls,javafx.fxml`
