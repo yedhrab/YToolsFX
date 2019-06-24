@@ -8,6 +8,19 @@ import java.util.Arrays;
 import java.util.Collections;
 
 public abstract class YoutubeDownloader {
+
+    private static final String YOUTUBE_DL_PATH = "/tools/youtube-dl.exe";
+
+    public static final class Mode {
+        private static final String FormatList = "-F";
+        private static final String Format = "-f";
+        private static final String Quite = "-q";
+        private static final String Output = "-o";
+        private static final String Thumbnail = "--write-thumbnail";
+        private static final String SkipDownload = "--skip-download";
+        private static final String Update = "-U";
+    }
+
     private static final ArrayList<YData> dataList = new ArrayList<>();
     private static Image thumbnail = null;
     private static String url = null;
@@ -41,7 +54,7 @@ public abstract class YoutubeDownloader {
     }
 
     public static void update() throws IOException {
-        Utility.executeCommand("youtube-dl -U");
+       executeCommand(Mode.Update);
     }
 
     public static void loadVideo(String url) throws IOException {
@@ -53,8 +66,11 @@ public abstract class YoutubeDownloader {
 
     // TODO: Thread olmalı, yoksa program kitleniyor
     private static boolean loadVideoInfo(String url) throws IOException {
-        String command = "youtube-dl -F \"" + url + "\"";
-        ArrayList<String> outString = Utility.executeCommand(command);
+        String[] commands = {
+                Mode.FormatList,
+                Utility.safeUrl(url)
+        };
+        ArrayList<String> outString = executeCommand(commands);
 
         if (outString.isEmpty()) {
             return false;
@@ -64,9 +80,20 @@ public abstract class YoutubeDownloader {
         return true;
     }
 
+    private static ArrayList<String> executeCommand(String... commands) throws IOException {
+        return Utility.executeCommand(Utility.createCommand(YOUTUBE_DL_PATH, commands));
+    }
+
     private static void loadVideoThumbnail(String url) throws IOException {
-        String command = "youtube-dl -q -o thumbnail.jpg --write-thumbnail --skip-download \"" + url + "\"";
-        Utility.executeCommand(command);
+        String[] commands = {
+                Mode.Quite,
+                Mode.Output,
+                "thumbnail.jpg",
+                Mode.Thumbnail,
+                Mode.SkipDownload,
+                Utility.safeUrl(url)
+        };
+        executeCommand(commands);
 
         thumbnail = Utility.getImageFromFile("thumbnail.jpg");
 

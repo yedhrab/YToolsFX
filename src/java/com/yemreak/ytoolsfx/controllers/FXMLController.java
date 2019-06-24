@@ -45,6 +45,7 @@ public class FXMLController {
 
     @FXML
     void loadVideoFromClipboard() {
+        System.out.println("Help");
         Image thumbnail = ivYoutubeVideoPreview.getImage();
         Cache.create("thumbnail", thumbnail);
 
@@ -52,14 +53,15 @@ public class FXMLController {
 
         try {
             String url = Utility.getClipboard();
-            // YoutubeDownloader.loadVideo(url); // TODO: Bundan dolayı yükleniyor gifi ekrana gelmiyor
+            YoutubeDownloader.loadVideo(url); // TODO: Bundan dolayı yükleniyor gifi ekrana gelmiyor
 
-            if (YoutubeDownloader.getThumbnail() != null) {
-                thumbnail = YoutubeDownloader.getThumbnail();
-            }
         } catch (IOException | UnsupportedFlavorException e) {
             e.printStackTrace();
         }
+
+        thumbnail = YoutubeDownloader.getThumbnail() == null ?
+                Utility.createImage("/images/video_not_found.png"):
+                YoutubeDownloader.getThumbnail();
 
         ivYoutubeVideoPreview.setImage(thumbnail);
         // TODO: burada kalındı

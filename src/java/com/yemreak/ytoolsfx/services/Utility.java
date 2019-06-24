@@ -14,6 +14,7 @@ import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public abstract class Utility {
 
@@ -32,8 +33,18 @@ public abstract class Utility {
         return link.replace("open?", "uc?export=download&");
     }
 
-    public static ArrayList<String> executeCommand(String command) throws IOException {
-        Process process = Runtime.getRuntime().exec(command);
+    public static ArrayList<String> executeCommand(String... commands) throws IOException {
+        Process process = new ProcessBuilder(commands).start();
+        return getProcessOutput(process);
+    }
+
+    public static String[] createCommand(String prefix, String... commands) {
+        ArrayList<String> commandList = new ArrayList<>(Arrays.asList(commands));
+        commandList.add(0, prefix);
+        return commandList.toArray(String[]::new);
+    }
+
+    public static ArrayList<String> getProcessOutput(Process process) throws IOException {
         BufferedReader stdInput = new BufferedReader(new InputStreamReader(process.getInputStream()));
 
         final ArrayList<String> lines = new ArrayList<>();
@@ -63,5 +74,8 @@ public abstract class Utility {
 
     public static boolean deleteFile(String filePath) {
         return new File(filePath).delete();
+    }
+    public static String safeUrl(String url) {
+        return "\"" + url + "\"";
     }
 }
