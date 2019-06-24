@@ -1,12 +1,15 @@
 package controllers;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import services.Cache;
 import services.Utility;
 import services.YoutubeDownloader;
 
@@ -19,11 +22,23 @@ public class FXMLController {
 
     public static boolean isMouseDragging = false;
 
-    @FXML
-    private ImageView iv_drive, iv_info, iv_youtube, ivYoutubeVideoPreview;
+    private boolean videoLoading = false;
+    private boolean controlExist = false;
 
     @FXML
-    private AnchorPane drivePane, infoPane, youtubePane;
+    private ImageView iv_drive, iv_info, iv_youtube, ivYoutubeVideoPreview, ivDownloadVideo;
+
+    @FXML
+    private Label labelFileSize;
+
+    @FXML
+    private CheckBox cbAudio, cbVideo;
+
+    @FXML
+    private Slider sliderQuality;
+
+    @FXML
+    private AnchorPane drivePane, infoPane, youtubePane, youtubeVideoSettingsPane;
 
     @FXML
     private TextField txt_gDriveLink, txt_directLink;
@@ -44,40 +59,61 @@ public class FXMLController {
     }
 
     @FXML
-    void loadVideoFromClipboard() {
-        System.out.println("Help");
-        Image thumbnail = ivYoutubeVideoPreview.getImage();
-        Cache.create("thumbnail", thumbnail);
+    void downloadVideo() {
+        YoutubeDownloader.downloadVideo();
+        // TODO: new Thread()
+    }
 
+    @FXML
+    void loadVideoFromClipboard() {
+        if (videoLoading) return;
+
+        videoLoading = true;
         ivYoutubeVideoPreview.setImage(Utility.createImage("/gifs/loading_spinner.gif"));
 
-        try {
-            String url = Utility.getClipboard();
-            YoutubeDownloader.loadVideo(url); // TODO: Bundan dolayı yükleniyor gifi ekrana gelmiyor
+        new Thread(() -> {
+            try {
+                String url = Utility.getClipboard();
+                YoutubeDownloader.loadVideo(url);
 
-        } catch (IOException | UnsupportedFlavorException e) {
-            e.printStackTrace();
-        }
+                Image thumbnail;
+                if (YoutubeDownloader.getThumbnail() != null) {
+                    thumbnail = YoutubeDownloader.getThumbnail();
+                    youtubeVideoSettingsPane.setDisable(false);
+                    if (!controlExist) {
+                        YoutubeDownloader.setController(cbAudio, cbVideo, sliderQuality, labelFileSize);
+                        controlExist = true;
+                    }
+                    Platform.runLater(() -> labelFileSize.setText(YoutubeDownloader.getFileSize(
+                            cbAudio.isSelected(), cbVideo.isSelected(),
+                            sliderQuality.getValue() / sliderQuality.getMax()
+                    )));
+                } else {
+                    thumbnail = Utility.createImage("/images/video_not_found.png");
+                    youtubeVideoSettingsPane.setDisable(true);
+                }
 
-        thumbnail = YoutubeDownloader.getThumbnail() == null ?
-                Utility.createImage("/images/video_not_found.png"):
-                YoutubeDownloader.getThumbnail();
+                ivYoutubeVideoPreview.setImage(thumbnail);
 
-        ivYoutubeVideoPreview.setImage(thumbnail);
-        // TODO: burada kalındı
+            } catch (IOException | UnsupportedFlavorException e) {
+                e.printStackTrace();
+            }
+
+            videoLoading = false;
+        }).start();
     }
 
     @FXML
     void onVideoThumbnailClicked() throws IOException, URISyntaxException {
+        System.out.println(YoutubeDownloader.getUrl());
         Utility.openInDefaultBrowser(YoutubeDownloader.getUrl());
     }
 
     @FXML
     void clearLoadedVideo() {
-
         YoutubeDownloader.flushData();
-        Image thumbnailCache = (Image) Cache.get("thumbnail", null);
-        if (thumbnailCache != null) ivYoutubeVideoPreview.setImage(thumbnailCache);
+        ivYoutubeVideoPreview.setImage(Utility.createImage("/images/video_thumbnail.png"));
+        youtubeVideoSettingsPane.setDisable(true);
     }
 
     @FXML

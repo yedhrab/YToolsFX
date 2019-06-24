@@ -1,5 +1,8 @@
 package services;
 
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 
 import java.io.IOException;
@@ -11,28 +14,150 @@ public abstract class YoutubeDownloader {
 
     private static final String YOUTUBE_DL_PATH = "/tools/youtube-dl.exe";
 
-    public static final class Mode {
-        private static final String FormatList = "-F";
-        private static final String Format = "-f";
-        private static final String Quite = "-q";
-        private static final String Output = "-o";
-        private static final String Thumbnail = "--write-thumbnail";
-        private static final String SkipDownload = "--skip-download";
-        private static final String Update = "-U";
-    }
-
+    private static final ArrayList<YData> availableDataList = new ArrayList<>();
     private static final ArrayList<YData> dataList = new ArrayList<>();
+
     private static Image thumbnail = null;
     private static String url = null;
+
+    private static boolean downloadAudio = true;
+    private static boolean downloadVideo = true;
+    private static double qualityRatio = 1;
+
+    private static String selectedFormat = null;
+    private static int selectedAvailableIndex = -1;
 
     /**
      * Saklanan verileri temizleme
      * TODO: Her yeni veri eklendiğinde buraya da eklenmeli
      */
     public static void flushData() {
+        availableDataList.clear();
         dataList.clear();
+
         thumbnail = null;
         url = null;
+
+        downloadAudio = true;
+        downloadVideo = true;
+        qualityRatio = 1;
+
+        selectedFormat = null;
+        selectedAvailableIndex = -1;
+    }
+
+    public static void setController(CheckBox audio, CheckBox video, Slider quality, Label fileSize) {
+        audio.selectedProperty().addListener(
+                (observableValue, oldValue, newValue) -> onCheckBoxChanged("audio", newValue, quality, fileSize)
+        );
+
+        video.selectedProperty().addListener(
+                (observableValue, oldValue, newValue) -> onCheckBoxChanged("video", newValue, quality, fileSize)
+        );
+        quality.valueProperty().addListener((observableValueQ, oldValue, newValue) -> {
+            qualityRatio = newValue.doubleValue() / quality.getMax();
+            selectFormat();
+            fileSize.setText(getFileSize());
+        });
+    }
+
+    private static void onCheckBoxChanged(String type, boolean value, Slider quality, Label fileSize) {
+        if (type.equals("audio")) {
+            downloadAudio = value;
+        } else if (type.equals("video")) {
+            downloadVideo = value;
+        }
+
+        updateAvailableList();
+        setUpSlider(quality);
+        selectFormat();
+        fileSize.setText(getFileSize());
+    }
+
+    private static void setUpSlider(Slider quality) {
+        if (availableDataList.size() <= 1) {
+            quality.setDisable(true);
+        } else {
+            quality.setDisable(false);
+            quality.setMax(availableDataList.size());
+            quality.setValue(availableDataList.size() * qualityRatio);
+        }
+    }
+
+    private static void updateAvailableList() {
+        String type = determineDataType();
+
+        availableDataList.clear();
+        dataList.forEach(data -> {
+            if (data.type.equals(type)) availableDataList.add(data);
+        });
+    }
+
+    private static void selectFormat() {
+        if (availableDataList.isEmpty()) {
+            selectedFormat = null;
+            selectedAvailableIndex = -1;
+        } else {
+            int index = (int) ((availableDataList.size() - 1) * qualityRatio);
+            selectedFormat = availableDataList.get(index).formatCode;
+            selectedAvailableIndex = index;
+        }
+    }
+
+    private static void selectFormat(double qualityRatio) {
+        if (availableDataList.isEmpty()) {
+            selectedFormat = null;
+            selectedAvailableIndex = -1;
+        } else {
+            int index = (int) ((availableDataList.size() - 1) * qualityRatio);
+            selectedFormat = availableDataList.get(index).formatCode;
+            selectedAvailableIndex = index;
+        }
+    }
+
+    public static String getFileSize(boolean downloadAudio, boolean downloadVideo, double qualityRatio) {
+        YoutubeDownloader.downloadAudio = downloadAudio;
+        YoutubeDownloader.downloadVideo = downloadVideo;
+
+        updateAvailableList();
+        selectFormat(qualityRatio);
+        return getFileSize();
+    }
+
+    private static String getFileSize() {
+        if (selectedAvailableIndex == -1) return "~ MB";
+        return availableDataList.get(selectedAvailableIndex).size;
+    }
+
+    private static String determineDataType() {
+        String type;
+        if (downloadAudio) {
+            if (downloadVideo) {
+                type = "full";
+            } else {
+                type = "audio";
+            }
+        } else {
+            if (downloadVideo) {
+                type = "video";
+            } else {
+                type = null;
+            }
+        }
+
+        return type;
+    }
+
+    public static void downloadVideo() {
+        // TODO: Yükleme kısmı yapılacak
+        System.out.println(selectedFormat);
+
+//        executeCommand(
+//                Mode.Format,
+//                selectedFormat,
+//                Mode.Quite,
+//                Utility.safeUrl(url)
+//        );
     }
 
     public static ArrayList<String> getDatas(String type) {
@@ -54,17 +179,18 @@ public abstract class YoutubeDownloader {
     }
 
     public static void update() throws IOException {
-       executeCommand(Mode.Update);
+        executeCommand(Mode.Update);
     }
 
     public static void loadVideo(String url) throws IOException {
         boolean videoExist = loadVideoInfo(url);
         if (videoExist) {
             loadVideoThumbnail(url);
+            YoutubeDownloader.url = url;
         }
     }
 
-    // TODO: Thread olmalı, yoksa program kitleniyor
+    // https://www.youtube.com/watch?v=5ANH_jvyOmA
     private static boolean loadVideoInfo(String url) throws IOException {
         String[] commands = {
                 Mode.FormatList,
@@ -96,11 +222,9 @@ public abstract class YoutubeDownloader {
         executeCommand(commands);
 
         thumbnail = Utility.getImageFromFile("thumbnail.jpg");
-
         Utility.deleteFile("thumbnail.jpg");
     }
 
-    // https://www.youtube.com/watch?v=5ANH_jvyOmA
     private static String[] splitOutLine(String outLine) {
         String[] split1 = outLine.split("\\s{2,}");
         String[] split2 = split1[split1.length - 1].split(",");
@@ -158,6 +282,16 @@ public abstract class YoutubeDownloader {
 
     public static String getUrl() {
         return url;
+    }
+
+    private static final class Mode {
+        private static final String FormatList = "-F";
+        private static final String Format = "-f";
+        private static final String Quite = "-q";
+        private static final String Output = "-o";
+        private static final String Thumbnail = "--write-thumbnail";
+        private static final String SkipDownload = "--skip-download";
+        private static final String Update = "-U";
     }
 
     private static class YData {

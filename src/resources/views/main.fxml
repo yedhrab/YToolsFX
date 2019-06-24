@@ -3,6 +3,7 @@
 <?import com.jfoenix.controls.JFXCheckBox?>
 <?import com.jfoenix.controls.JFXSlider?>
 <?import com.jfoenix.controls.JFXToggleButton?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
@@ -11,8 +12,8 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="465.0" prefWidth="382.0" style="-fx-background-color: transparent ;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.FXMLController">
-    <AnchorPane prefHeight="61.0" prefWidth="382.0" style="-fx-background-color: #3D3956;">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="465.0" prefWidth="382.0" styleClass="inVisible" stylesheets="@../css/main.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.FXMLController">
+    <AnchorPane prefHeight="61.0" prefWidth="382.0" styleClass="anchorPane" stylesheets="@../css/main.css">
         <ImageView fx:id="iv_drive" fitHeight="38.0" fitWidth="43.0" layoutX="14.0" layoutY="12.0" onMouseClicked="#handleIconClick" pickOnBounds="true" preserveRatio="true">
             <Image url="@../images/google_drive.png" />
         </ImageView>
@@ -31,7 +32,7 @@
          </image>
         </ImageView>
     </AnchorPane>
-    <AnchorPane fx:id="drivePane" layoutY="70.0" prefHeight="395.0" prefWidth="382.0" style="-fx-background-color: #3D3956;" visible="false">
+    <AnchorPane fx:id="drivePane" layoutY="70.0" prefHeight="395.0" prefWidth="382.0" styleClass="anchorPane" stylesheets="@../css/main.css" visible="false">
         <Label layoutX="299.0" layoutY="337.0" text="Author" textAlignment="CENTER" textFill="WHITE">
             <font>
                 <Font name="System Bold" size="14.0" />
@@ -56,21 +57,6 @@
                 <Font name="System Bold" size="12.0" />
             </font>
         </Label>
-        <ImageView fitHeight="38.0" fitWidth="38.0" layoutX="327.0" layoutY="105.0" onMouseClicked="#onClipboardIconClicked" pickOnBounds="true" preserveRatio="true">
-            <image>
-                <Image url="@../images/paste.png" />
-            </image>
-        </ImageView>
-        <ImageView fitHeight="38.0" fitWidth="38.0" layoutX="327.0" layoutY="40.0" onMouseClicked="#clearGDirectLink" pickOnBounds="true" preserveRatio="true">
-            <image>
-                <Image url="@../images/clean.png" />
-            </image>
-        </ImageView>
-        <ImageView fitHeight="49.0" fitWidth="61.0" layoutX="253.0" layoutY="189.0" onMouseClicked="#onQuickIconClicked" pickOnBounds="true" preserveRatio="true">
-            <image>
-                <Image url="@../images/quick_mode.png" />
-            </image>
-        </ImageView>
         <Label layoutX="68.0" layoutY="172.0" text="Quick Mode" textFill="#dad2d2">
             <font>
                 <Font name="System Bold" size="12.0" />
@@ -78,9 +64,12 @@
         </Label>
         <Text fill="#979292" layoutX="68.0" layoutY="205.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Just click the energy button." wrappingWidth="154.3828125" />
         <Text fill="#979292" layoutX="67.0" layoutY="237.0" strokeType="OUTSIDE" strokeWidth="0.0" text="- Then put new link to clipboard" wrappingWidth="216.3828125" />
-        <Text fill="#979292" layoutX="67.0" layoutY="222.0" strokeType="OUTSIDE" strokeWidth="0.0" text="- Will copy link from clipboard" wrappingWidth="216.3828125" />
+        <Text fill="#979292" layoutX="67.0" layoutY="221.0" strokeType="OUTSIDE" strokeWidth="0.0" text="- Will copy link from clipboard" wrappingWidth="169.0" />
+      <Button id="paste" defaultButton="true" layoutX="327.0" layoutY="105.0" mnemonicParsing="false" onMouseClicked="#onClipboardIconClicked" prefHeight="38.0" prefWidth="38.0" />
+      <Button id="clear" cancelButton="true" layoutX="327.0" layoutY="40.0" mnemonicParsing="false" onMouseClicked="#clearGDirectLink" prefHeight="38.0" prefWidth="38.0" />
+      <Button id="clear" cancelButton="true" layoutX="253.0" layoutY="189.0" mnemonicParsing="false" onMouseClicked="#onQuickIconClicked" prefHeight="49.0" prefWidth="49.0" />
     </AnchorPane>
-    <AnchorPane fx:id="infoPane" layoutY="70.0" prefHeight="395.0" prefWidth="382.0" style="-fx-background-color: #3D3956;" visible="false">
+    <AnchorPane fx:id="infoPane" layoutY="70.0" prefHeight="395.0" prefWidth="382.0" styleClass="anchorPane" stylesheets="@../css/main.css" visible="false">
         <Label layoutX="161.0" layoutY="152.0" text="Author" textAlignment="CENTER" textFill="WHITE">
             <font>
                 <Font name="System Bold" size="18.0" />
@@ -132,8 +121,30 @@
         <Text fill="#d0cfcf" layoutX="63.0" layoutY="355.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Fileshare system between computers along WiFi" />
         <Text fill="#d0cfcf" layoutX="47.0" layoutY="371.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Simple firebase codebank which is store code snippets" />
     </AnchorPane>
-    <AnchorPane fx:id="youtubePane" layoutY="70.0" prefHeight="395.0" prefWidth="382.0" style="-fx-background-color: #3D3956;">
+    <AnchorPane fx:id="youtubePane" layoutY="70.0" prefHeight="395.0" prefWidth="382.0" styleClass="anchorPane" stylesheets="@../css/main.css">
         <children>
+         <AnchorPane fx:id="youtubeVideoSettingsPane" disable="true" layoutX="52.0" layoutY="235.0" prefHeight="143.0" prefWidth="279.0">
+            <children>
+                  <JFXCheckBox fx:id="cbAudio" focusTraversable="false" layoutX="78.0" layoutY="14.0" selected="true" text="Audio" textFill="#dee5ff" unCheckedColor="#c9baba" />
+                  <JFXCheckBox fx:id="cbVideo" focusTraversable="false" layoutX="148.0" layoutY="14.0" selected="true" text="Video" textFill="#dee5ff" unCheckedColor="#c9baba" />
+                  <JFXSlider fx:id="sliderQuality" blockIncrement="1.0" layoutX="141.0" layoutY="47.0" max="10.0" min="1.0" prefHeight="14.0" prefWidth="101.0" value="3.0" />
+                  <Label layoutX="49.0" layoutY="45.0" text="File Qulity" textFill="#dad2d2">
+                      <font>
+                          <Font name="System Bold" size="12.0" />
+                      </font>
+                  </Label>
+               <Button id="download" layoutX="115.0" layoutY="93.0" mnemonicParsing="false" onMouseClicked="#downloadVideo" prefHeight="49.0" prefWidth="49.0" />
+               <Label layoutX="49.0" layoutY="68.0" text="File Size" textFill="#dad2d2">
+                  <font>
+                     <Font name="System Bold" size="12.0" />
+                  </font>
+               </Label>
+               <Label fx:id="labelFileSize" layoutX="141.0" layoutY="68.0" text="~ MB" textFill="#fff300">
+                  <font>
+                     <Font name="System Bold" size="12.0" />
+                  </font>
+               </Label>
+            </children></AnchorPane>
             <Label layoutX="308.0" layoutY="354.0" text="Author" textAlignment="CENTER" textFill="#ba98bf">
                 <font>
                     <Font name="System Bold Italic" size="12.0" />
@@ -149,37 +160,8 @@
                     <Font name="System Bold" size="13.0" />
                 </font>
             </Label>
-            <ImageView fitHeight="49.0" fitWidth="49.0" layoutX="257.0" layoutY="32.0" onMouseClicked="#loadVideoFromClipboard" pickOnBounds="true" preserveRatio="true">
-                <image>
-                    <Image url="@../images/paste.png" />
-                </image>
-            </ImageView>
             <Text fill="#979292" layoutX="49.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="- Copy video url to clipboard" wrappingWidth="154.3828125" />
             <Text fill="#979292" layoutX="49.0" layoutY="71.0" strokeType="OUTSIDE" strokeWidth="0.0" text="- Click to the left clipboard icon" wrappingWidth="176.3828125" />
-            <JFXCheckBox layoutX="127.0" layoutY="248.0" selected="true" text="Audio" textFill="#dee5ff" unCheckedColor="#c9baba" />
-            <JFXCheckBox layoutX="201.0" layoutY="248.0" selected="true" text="Video" textFill="#dee5ff" unCheckedColor="#c9baba" />
-            <JFXSlider layoutX="171.0" layoutY="278.0" value="100.0" />
-            <Label layoutX="77.0" layoutY="276.0" text="Audio Quality" textFill="#dad2d2">
-                <font>
-                    <Font name="System Bold" size="12.0" />
-                </font>
-            </Label>
-            <JFXSlider layoutX="171.0" layoutY="295.0" value="100.0" />
-            <Label layoutX="78.0" layoutY="293.0" text="Video Quality" textFill="#dad2d2">
-                <font>
-                    <Font name="System Bold" size="12.0" />
-                </font>
-            </Label>
-            <ImageView fitHeight="49.0" fitWidth="61.0" layoutX="169.0" layoutY="325.0" onMouseClicked="#onQuickIconClicked" pickOnBounds="true" preserveRatio="true">
-                <image>
-                    <Image url="@../images/download.png" />
-                </image>
-            </ImageView>
-            <ImageView fitHeight="49.0" fitWidth="49.0" layoutX="311.0" layoutY="33.0" onMouseClicked="#clearLoadedVideo" pickOnBounds="true" preserveRatio="true">
-                <image>
-                    <Image url="@../images/clean.png" />
-                </image>
-            </ImageView>
             <Label layoutX="151.0" layoutY="104.0" text="Video Preview" textFill="#dad2d2">
                 <font>
                     <Font name="System Bold" size="12.0" />
@@ -191,6 +173,8 @@
                <Image url="@../images/video_thumbnail.png" />
             </image>
          </ImageView>
+         <Button id="paste" defaultButton="true" layoutX="257.0" layoutY="32.0" mnemonicParsing="false" onMouseClicked="#loadVideoFromClipboard" prefHeight="49.0" prefWidth="49.0" />
+         <Button id="clear" cancelButton="true" layoutX="321.0" layoutY="32.0" mnemonicParsing="false" onMouseClicked="#clearLoadedVideo" prefHeight="49.0" prefWidth="49.0" />
         </children>
     </AnchorPane>
 </AnchorPane>
