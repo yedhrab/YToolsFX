@@ -2,10 +2,7 @@ package controllers;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.Slider;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -22,6 +19,8 @@ public class FXMLController {
 
     public static boolean isMouseDragging = false;
 
+    private static Thread thread = null;
+
     private boolean videoLoading = false;
     private boolean controlExist = false;
 
@@ -29,10 +28,13 @@ public class FXMLController {
     private ImageView iv_drive, iv_info, iv_youtube, ivYoutubeVideoPreview, ivDownloadVideo;
 
     @FXML
-    private Label labelFileSize;
+    private Label labelFileSize, labelInstallationSize;
 
     @FXML
     private CheckBox cbAudio, cbVideo;
+
+    @FXML
+    private Button buttonDownload;
 
     @FXML
     private Slider sliderQuality;
@@ -41,92 +43,29 @@ public class FXMLController {
     private AnchorPane drivePane, infoPane, youtubePane, youtubeVideoSettingsPane;
 
     @FXML
+    private AnchorPane paneProgress;
+
+    @FXML
+    private ProgressIndicator downloadProgress;
+
+    @FXML
     private TextField txt_gDriveLink, txt_directLink;
 
-    @FXML
-    void clearGDirectLink() {
-        txt_gDriveLink.setText("");
-    }
 
-    @FXML
-    void closeApplication() {
-        System.exit(0);
-    }
+    /**
+     * Tek bir panel gösterme yapısını sağlar
+     * TODO: Her panel, eklendiğinde buraya da eklenmeli
+     *
+     * @param pane Gösterilecek panel
+     */
+    private void hideAllPaneExceptOne(AnchorPane pane) {
+        boolean isVisible = pane == null || pane.isVisible();
 
-    @FXML
-    void onClipboardIconClicked() {
-        Utility.putClipboard(txt_directLink.getText());
-    }
+        drivePane.setVisible(false);
+        infoPane.setVisible(false);
+        youtubePane.setVisible(false);
 
-    @FXML
-    void downloadVideo() {
-        YoutubeDownloader.downloadVideo();
-        // TODO: new Thread()
-    }
-
-    @FXML
-    void loadVideoFromClipboard() {
-        if (videoLoading) return;
-
-        videoLoading = true;
-        ivYoutubeVideoPreview.setImage(Utility.createImage("/gifs/loading_spinner.gif"));
-
-        new Thread(() -> {
-            try {
-                String url = Utility.getClipboard();
-                YoutubeDownloader.loadVideo(url);
-
-                Image thumbnail;
-                if (YoutubeDownloader.getThumbnail() != null) {
-                    thumbnail = YoutubeDownloader.getThumbnail();
-                    youtubeVideoSettingsPane.setDisable(false);
-                    if (!controlExist) {
-                        YoutubeDownloader.setController(cbAudio, cbVideo, sliderQuality, labelFileSize);
-                        controlExist = true;
-                    }
-                    Platform.runLater(() -> labelFileSize.setText(YoutubeDownloader.getFileSize(
-                            cbAudio.isSelected(), cbVideo.isSelected(),
-                            sliderQuality.getValue() / sliderQuality.getMax()
-                    )));
-                } else {
-                    thumbnail = Utility.createImage("/images/video_not_found.png");
-                    youtubeVideoSettingsPane.setDisable(true);
-                }
-
-                ivYoutubeVideoPreview.setImage(thumbnail);
-
-            } catch (IOException | UnsupportedFlavorException e) {
-                e.printStackTrace();
-            }
-
-            videoLoading = false;
-        }).start();
-    }
-
-    @FXML
-    void onVideoThumbnailClicked() throws IOException, URISyntaxException {
-        System.out.println(YoutubeDownloader.getUrl());
-        Utility.openInDefaultBrowser(YoutubeDownloader.getUrl());
-    }
-
-    @FXML
-    void clearLoadedVideo() {
-        YoutubeDownloader.flushData();
-        ivYoutubeVideoPreview.setImage(Utility.createImage("/images/video_thumbnail.png"));
-        youtubeVideoSettingsPane.setDisable(true);
-    }
-
-    @FXML
-    void onQuickIconClicked() throws IOException, UnsupportedFlavorException {
-        String link = Utility.getClipboard();
-        link = Utility.makeLinkDirect(link);
-        Utility.putClipboard(link);
-    }
-
-
-    @FXML
-    void createDirectLink() {
-        txt_directLink.setText(Utility.makeLinkDirect(txt_gDriveLink.getText()));
+        if (!isVisible) pane.setVisible(true);
     }
 
     /**
@@ -152,20 +91,103 @@ public class FXMLController {
         }
     }
 
-    /**
-     * Tek bir panel gösterme yapısını sağlar
-     * TODO: Her panel, eklendiğinde buraya da eklenmeli
-     *
-     * @param pane Gösterilecek panel
-     */
-    private void hideAllPaneExceptOne(AnchorPane pane) {
-        boolean isVisible = pane == null || pane.isVisible();
-
-        drivePane.setVisible(false);
-        infoPane.setVisible(false);
-        youtubePane.setVisible(false);
-
-        if (!isVisible) pane.setVisible(true);
+    @FXML
+    void clearGDirectLink() {
+        txt_gDriveLink.setText("");
     }
+
+    @FXML
+    void closeApplication() {
+        System.exit(0);
+    }
+
+    @FXML
+    void onClipboardIconClicked() {
+        Utility.putClipboard(txt_directLink.getText());
+    }
+
+    @FXML
+    void downloadVideo() {
+        thread = new Thread(() -> {
+            try {
+                if (YoutubeDownloader.getUrl() == null) return;
+
+                buttonDownload.setVisible(false);
+                paneProgress.setVisible(true);
+                YoutubeDownloader.download(downloadProgress, labelInstallationSize);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+        thread.start();
+    }
+
+    @FXML
+    void loadVideoFromClipboard() {
+        if (videoLoading) return;
+
+        videoLoading = true;
+        ivYoutubeVideoPreview.setImage(Utility.createImage("/gifs/loading_spinner.gif"));
+
+        thread = new Thread(() -> {
+            try {
+                String url = "https://www.youtube.com/watch?v=5ANH_jvyOmA"; // Utility.getClipboard();
+                YoutubeDownloader.loadVideo(url);
+
+                Image thumbnail;
+                if (YoutubeDownloader.getThumbnail() != null) {
+                    thumbnail = YoutubeDownloader.getThumbnail();
+                    youtubeVideoSettingsPane.setDisable(false);
+                    if (!controlExist) {
+                        Platform.runLater(() -> {
+                            YoutubeDownloader.setController(cbAudio, cbVideo, sliderQuality, labelFileSize);
+                            controlExist = true;
+                        });
+                    }
+                } else {
+                    thumbnail = Utility.createImage("/images/video_not_found.png");
+                    youtubeVideoSettingsPane.setDisable(true);
+                }
+
+                ivYoutubeVideoPreview.setImage(thumbnail);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            videoLoading = false;
+        });
+        thread.start();
+    }
+
+    @FXML
+    void onVideoThumbnailClicked() throws IOException, URISyntaxException {
+        System.out.println(YoutubeDownloader.getUrl());
+        Utility.openInDefaultBrowser(YoutubeDownloader.getUrl());
+    }
+
+    @FXML
+    void clearLoadedVideo() {
+        if (thread != null) thread.interrupt();
+
+        YoutubeDownloader.flushData();
+        ivYoutubeVideoPreview.setImage(Utility.createImage("/images/video_thumbnail.png"));
+        labelFileSize.setText("~ MB");
+        youtubeVideoSettingsPane.setDisable(true);
+    }
+
+    @FXML
+    void onQuickIconClicked() throws IOException, UnsupportedFlavorException {
+        String link = Utility.getClipboard();
+        link = Utility.makeLinkDirect(link);
+        Utility.putClipboard(link);
+    }
+
+
+    @FXML
+    void createDirectLink() {
+        txt_directLink.setText(Utility.makeLinkDirect(txt_gDriveLink.getText()));
+    }
+
 
 }

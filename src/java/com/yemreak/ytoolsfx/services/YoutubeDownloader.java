@@ -1,8 +1,7 @@
 package services;
 
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.Slider;
+import javafx.application.Platform;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 
 import java.io.IOException;
@@ -47,6 +46,8 @@ public abstract class YoutubeDownloader {
     }
 
     public static void setController(CheckBox audio, CheckBox video, Slider quality, Label fileSize) {
+        onCheckBoxChanged("audip", audio.isSelected(), quality, fileSize);
+
         audio.selectedProperty().addListener(
                 (observableValue, oldValue, newValue) -> onCheckBoxChanged("audio", newValue, quality, fileSize)
         );
@@ -148,9 +149,26 @@ public abstract class YoutubeDownloader {
         return type;
     }
 
-    public static void downloadVideo() {
-        // TODO: Yükleme kısmı yapılacak
-        System.out.println(selectedFormat);
+    public static void download(ProgressIndicator progressIndicator, Label installationSize) throws IOException {
+        progressIndicator.setVisible(true);
+        // TODO: pipeline gerekli
+        // TODO: iptal edilebilir olmalı
+        ArrayList<String> output = executeCommand(
+                Mode.Format,
+                selectedFormat,
+                Mode.Output,
+                "temp." + availableDataList.get(selectedAvailableIndex).extension,
+                Utility.safeUrl(url)
+        );
+
+        DownloadData data = parseDownloadOutput(output);
+
+        Platform.runLater(() -> {
+            progressIndicator.setProgress(data.ratio);
+            installationSize.setText(String.valueOf(data.size));
+            // TODO: yükleme hızı
+        });
+
 
 //        executeCommand(
 //                Mode.Format,
@@ -158,6 +176,41 @@ public abstract class YoutubeDownloader {
 //                Mode.Quite,
 //                Utility.safeUrl(url)
 //        );
+    }
+
+    private static DownloadData parseDownloadOutput(ArrayList<String> downloadOutput) {
+        String[] downloadInfo = downloadOutput.get(downloadOutput.size() - 1).split(" ");
+
+        double ratio = 0, size = 0, speed = 0;
+        for (String info : downloadInfo) {
+            String value;
+            if (info.contains("%")) {
+                value = info.replace("%", "");
+                ratio = Double.parseDouble(value);
+            } else if (info.contains("MiB")) {
+                if (info.contains("/s")) {
+                    value = info.replace("Mib/s", "");
+                    speed = Double.parseDouble(value);
+                } else {
+                    value = info.replace("MiB", "");
+                    size = Double.parseDouble(value);
+                }
+            }
+        }
+
+        return new DownloadData(ratio, size, speed);
+    }
+
+    private static class DownloadData {
+        final double ratio;
+        final double size;
+        final double speed;
+
+        DownloadData(double ratio, double size, double speed) {
+            this.ratio = ratio;
+            this.size = size;
+            this.speed = speed;
+        }
     }
 
     public static ArrayList<String> getDatas(String type) {

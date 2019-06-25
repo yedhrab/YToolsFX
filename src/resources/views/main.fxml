@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.gluonhq.charm.glisten.control.ProgressIndicator?>
 <?import com.jfoenix.controls.JFXCheckBox?>
 <?import com.jfoenix.controls.JFXSlider?>
 <?import com.jfoenix.controls.JFXToggleButton?>
@@ -133,7 +134,7 @@
                           <Font name="System Bold" size="12.0" />
                       </font>
                   </Label>
-               <Button id="download" layoutX="115.0" layoutY="93.0" mnemonicParsing="false" onMouseClicked="#downloadVideo" prefHeight="49.0" prefWidth="49.0" />
+               <Button id="download" fx:id="buttonDownload" layoutX="115.0" layoutY="93.0" mnemonicParsing="false" onMouseClicked="#downloadVideo" prefHeight="49.0" prefWidth="49.0" />
                <Label layoutX="49.0" layoutY="68.0" text="File Size" textFill="#dad2d2">
                   <font>
                      <Font name="System Bold" size="12.0" />
@@ -144,6 +145,16 @@
                      <Font name="System Bold" size="12.0" />
                   </font>
                </Label>
+               <AnchorPane fx:id="paneProgress" layoutX="115.0" layoutY="93.0" prefHeight="49.0" prefWidth="49.0" visible="false">
+                  <children>
+                     <ProgressIndicator fx:id="downloadProgress" progress="0.98" radius="20.0" />
+                     <Label fx:id="labelInstallationSize" layoutX="11.0" layoutY="16.0" text="0 MB" textFill="#cdf9ff">
+                        <font>
+                           <Font name="System Bold" size="10.0" />
+                        </font>
+                     </Label>
+                  </children>
+               </AnchorPane>
             </children></AnchorPane>
             <Label layoutX="308.0" layoutY="354.0" text="Author" textAlignment="CENTER" textFill="#ba98bf">
                 <font>

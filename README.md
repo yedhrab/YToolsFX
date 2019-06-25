@@ -41,10 +41,11 @@ Kişisel araçlarımı derlediğin JavaFX GUI'si.
 
 ### Bağımlılıkları Dahil Etme
 
-Proje [JavaFX] ve [JFoenix] frameworkü üzerinden yapılmıştır.
+Proje [JavaFX] ve [JFoenix] framework'ü ve [Gluonhq charm-glisten] modülü ile yapılmıştır.
 
 - [JavaFX], [JFoenix] paketlerini indirin
-- <kbd>Project Structure</kbd> - <kbd>Modules</kbd> - <kbd>+</kbd> - <kbd>Library</kbd> ile JavaFX'in lib, JFoenix'in kendisini ekleyin
+- [Gluonhq charm-glisten] jar dosyasını indirin _(v6.0.0)_
+- <kbd>Project Structure</kbd> - <kbd>Modules</kbd> - <kbd>+</kbd> - <kbd>Library</kbd> ile JavaFX'in lib, JFoenix'in kendisini ve `charm-glisten-6.0.0.jar` dosyasını ekleyin
 
 > Youtube indirici için [youtube-dl](https://yt-dl.org/downloads/2019.06.21/youtube-dl.exe) ve onun gerek duyduğu [Microsoft Visual C++ 2010 Redistributable Package (x86)](https://download.microsoft.com/download/5/B/C/5BC5DBB3-652D-4DCE-B14A-475AB85EEF6E/vcredist_x86.exe) paketi gereklidir.
 
@@ -81,6 +82,7 @@ Proje [JavaFX] ve [JFoenix] frameworkü üzerinden yapılmıştır.
 
 [javafx]: http://gluonhq.com/download/javafx-12-0-1-sdk-windows/
 [jfoenix]: https://search.maven.org/remotecontent?filepath=com/jfoenix/jfoenix/9.0.8/jfoenix-9.0.8.jar
+[gluonhq charm-glisten]: https://nexus.gluonhq.com/nexus/content/repositories/releases/com/gluonhq/charm-glisten/
 [scene builder]: https://gluonhq.com/products/scene-builder/thanks/?dl=/download/scene-builder-11-windows-x64/
 
 <!-- İletişim -->
