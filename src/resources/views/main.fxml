@@ -124,35 +124,43 @@
     </AnchorPane>
     <AnchorPane fx:id="youtubePane" layoutY="70.0" prefHeight="395.0" prefWidth="382.0" styleClass="anchorPane" stylesheets="@../css/main.css">
         <children>
-         <AnchorPane fx:id="youtubeVideoSettingsPane" disable="true" layoutX="52.0" layoutY="235.0" prefHeight="143.0" prefWidth="279.0">
+         <AnchorPane fx:id="paneDownloadController" disable="true" layoutX="52.0" layoutY="253.0" prefHeight="122.0" prefWidth="279.0">
             <children>
-                  <JFXCheckBox fx:id="cbAudio" focusTraversable="false" layoutX="78.0" layoutY="14.0" selected="true" text="Audio" textFill="#dee5ff" unCheckedColor="#c9baba" />
-                  <JFXCheckBox fx:id="cbVideo" focusTraversable="false" layoutX="148.0" layoutY="14.0" selected="true" text="Video" textFill="#dee5ff" unCheckedColor="#c9baba" />
-                  <JFXSlider fx:id="sliderQuality" blockIncrement="1.0" layoutX="141.0" layoutY="47.0" max="10.0" min="1.0" prefHeight="14.0" prefWidth="101.0" value="3.0" />
-                  <Label layoutX="49.0" layoutY="45.0" text="File Qulity" textFill="#dad2d2">
-                      <font>
-                          <Font name="System Bold" size="12.0" />
-                      </font>
-                  </Label>
-               <Button id="download" fx:id="buttonDownload" layoutX="115.0" layoutY="93.0" mnemonicParsing="false" onMouseClicked="#downloadVideo" prefHeight="49.0" prefWidth="49.0" />
-               <Label layoutX="49.0" layoutY="68.0" text="File Size" textFill="#dad2d2">
-                  <font>
-                     <Font name="System Bold" size="12.0" />
-                  </font>
-               </Label>
-               <Label fx:id="labelFileSize" layoutX="141.0" layoutY="68.0" text="~ MB" textFill="#fff300">
-                  <font>
-                     <Font name="System Bold" size="12.0" />
-                  </font>
-               </Label>
-               <AnchorPane fx:id="paneProgress" layoutX="115.0" layoutY="93.0" prefHeight="49.0" prefWidth="49.0" visible="false">
+               <AnchorPane fx:id="paneDownloadSettings" prefHeight="71.0" prefWidth="279.0">
                   <children>
-                     <ProgressIndicator fx:id="downloadProgress" progress="0.98" radius="20.0" />
-                     <Label fx:id="labelInstallationSize" layoutX="11.0" layoutY="16.0" text="0 MB" textFill="#cdf9ff">
+                     <JFXCheckBox fx:id="cbAudio" focusTraversable="false" layoutX="79.0" selected="true" text="Audio" textFill="#dee5ff" unCheckedColor="#c9baba" />
+                     <JFXCheckBox fx:id="cbVideo" focusTraversable="false" layoutX="149.0" selected="true" text="Video" textFill="#dee5ff" unCheckedColor="#c9baba" />
+                     <JFXSlider fx:id="sliderQuality" blockIncrement="1.0" layoutX="142.0" layoutY="33.0" max="10.0" min="1.0" prefHeight="14.0" prefWidth="101.0" value="3.0" />
+                     <Label layoutX="50.0" layoutY="31.0" text="File Qulity" textFill="#dad2d2">
+                        <font>
+                           <Font name="System Bold" size="12.0" />
+                        </font>
+                     </Label>
+                     <Label layoutX="50.0" layoutY="54.0" text="File Size" textFill="#dad2d2">
+                        <font>
+                           <Font name="System Bold" size="12.0" />
+                        </font>
+                     </Label>
+                     <Label fx:id="labelFileSize" layoutX="142.0" layoutY="54.0" text="~ MB" textFill="#fff300">
+                        <font>
+                           <Font name="System Bold" size="12.0" />
+                        </font>
+                     </Label>
+                  </children></AnchorPane>
+               <AnchorPane fx:id="paneDownloadProgress" layoutX="115.0" layoutY="75.0" prefHeight="49.0" prefWidth="49.0">
+                  <children>
+                     <ProgressIndicator fx:id="downloadProgress" progress="0.98" radius="20.0" visible="false" />
+                     <Label fx:id="labelInstallationSize" layoutX="10.0" layoutY="16.0" text="0 MB" textFill="#cdf9ff" visible="false">
                         <font>
                            <Font name="System Bold" size="10.0" />
                         </font>
                      </Label>
+                     <Button id="download" fx:id="buttonDownload" mnemonicParsing="false" onMouseClicked="#downloadVideo" prefHeight="49.0" prefWidth="49.0" />
+                     <ImageView fx:id="ivDownloadFinished" fitHeight="49.0" fitWidth="49.0" pickOnBounds="true" preserveRatio="true" visible="false">
+                        <image>
+                           <Image url="@../images/verified.png" />
+                        </image>
+                     </ImageView>
                   </children>
                </AnchorPane>
             </children></AnchorPane>
@@ -173,19 +181,20 @@
             </Label>
             <Text fill="#979292" layoutX="49.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="- Copy video url to clipboard" wrappingWidth="154.3828125" />
             <Text fill="#979292" layoutX="49.0" layoutY="71.0" strokeType="OUTSIDE" strokeWidth="0.0" text="- Click to the left clipboard icon" wrappingWidth="176.3828125" />
-            <Label layoutX="151.0" layoutY="104.0" text="Video Preview" textFill="#dad2d2">
+            <Label layoutX="151.0" layoutY="103.0" text="Video Preview" textFill="#dad2d2">
                 <font>
                     <Font name="System Bold" size="12.0" />
                 </font>
             </Label>
             <Text fill="#979292" layoutX="49.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" text="- Click the clean icon if video is wrong" wrappingWidth="205.421875" />
-         <ImageView fx:id="ivYoutubeVideoPreview" fitHeight="106.0" fitWidth="195.0" layoutX="94.0" layoutY="129.0" onMouseClicked="#onVideoThumbnailClicked" pickOnBounds="true">
+         <ImageView fx:id="ivYoutubeVideoPreview" fitHeight="106.0" fitWidth="195.0" layoutX="94.0" layoutY="141.0" onMouseClicked="#onVideoThumbnailClicked" pickOnBounds="true">
             <image>
                <Image url="@../images/video_thumbnail.png" />
             </image>
          </ImageView>
          <Button id="paste" defaultButton="true" layoutX="257.0" layoutY="32.0" mnemonicParsing="false" onMouseClicked="#loadVideoFromClipboard" prefHeight="49.0" prefWidth="49.0" />
          <Button id="clear" cancelButton="true" layoutX="321.0" layoutY="32.0" mnemonicParsing="false" onMouseClicked="#clearLoadedVideo" prefHeight="49.0" prefWidth="49.0" />
+         <Text fx:id="txtVideoName" fill="#dad2d2" layoutX="26.0" layoutY="135.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="332.0" />
         </children>
     </AnchorPane>
 </AnchorPane>

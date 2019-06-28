@@ -6,7 +6,7 @@ Kişisel araçlarımı derlediğin JavaFX GUI'si.
 
 ## İçerikler <!-- omit in toc -->
 
-- [Örnek Görüntü](#%C3%96rnek-G%C3%B6r%C3%BCnt%C3%BC)
+- [Tanıtım](#Tan%C4%B1t%C4%B1m)
 - [Hazırlanma](#Haz%C4%B1rlanma)
   - [Java12 Fonksiyonları Aktif Etme](#Java12-Fonksiyonlar%C4%B1-Aktif-Etme)
   - [Dosyaları Yapılandırma](#Dosyalar%C4%B1-Yap%C4%B1land%C4%B1rma)
@@ -15,13 +15,20 @@ Kişisel araçlarımı derlediğin JavaFX GUI'si.
   - [Derleme Yapılandırması](#Derleme-Yap%C4%B1land%C4%B1rmas%C4%B1)
 - [Destek ve İletişim](#Destek-ve-%C4%B0leti%C5%9Fim)
 
-## Örnek Görüntü
+## Tanıtım
+
+- Google drive direct link oluşturma
+  - Direct link, tıkladığınız anda indirelebilen linklerdir
+- Youtube üzerinden video / ses indirme
+  - Videoları `Downloads` dizinine kaydeder.
 
 ![app](res/app.gif)
 
 ## Hazırlanma
 
 <kbd>Project Structures</kbd> kısmına erişme kısayolu: <kbd>CTRL</kbd> + <kbd>ALT</kbd> + <kbd>SHIFT</kbd> + <kbd>S</kbd>
+
+> Test için otomatize edilemsi lazım 😢
 
 ### Java12 Fonksiyonları Aktif Etme
 
