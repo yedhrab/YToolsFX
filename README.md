@@ -13,6 +13,7 @@ Kişisel araçlarımı derlediğin JavaFX GUI'si.
   - [Bağımlılıkları Dahil Etme](#Ba%C4%9F%C4%B1ml%C4%B1l%C4%B1klar%C4%B1-Dahil-Etme)
   - [Scene Builder ile Tasarım Ayarı](#Scene-Builder-ile-Tasar%C4%B1m-Ayar%C4%B1)
   - [Derleme Yapılandırması](#Derleme-Yap%C4%B1land%C4%B1rmas%C4%B1)
+- [Ek Scriptler](#Ek-Scriptler)
 - [Destek ve İletişim](#Destek-ve-%C4%B0leti%C5%9Fim)
 
 ## Tanıtım
@@ -69,11 +70,35 @@ Proje [JavaFX] ve [JFoenix] framework'ü ve [Gluonhq charm-glisten] modülü ile
 
 <kbd>Edit configuration</kbd> alanına girin
 
-- **Main class** yerine `apllicaitons.MainApp` yazın
+- **Main class** yerine `application.MainApp` yazın
 - **VM Options** alanına alttaki metni yazın:
   - `--module-path "C:\Program Files\Java\javafx-sdk-12.0.1\lib" --add-modules=javafx.controls,javafx.fxml`
 
 > `C:\Program Files\Java\javafx-sdk-12.0.1` yerine sizin kendi JavaFX SDK yolunuzu yazın.
+
+## Ek Scriptler
+
+```bat
+set PATH_TO_FX_MODS=C:\Program Files\Java\javafx-jmods-12.0.1
+set JAVA_HOME=C:\Program Files\Java\jdk-12.0.1
+set PATH_TO_JDK_FX=C:\Program Files\Java\jdkfx-12.0.1
+"%JAVA_HOME%\bin\jlink" --module-path "%PATH_TO_FX_MODS%" --add-modules java.se,javafx.fxml,javafx.web,javafx.media,javafx.swing --bind-services --output "%PATH_TO_JDK_FX%"
+
+javac --module-path "%PATH_TO_FX_MODS%" --add-modules java.se,javafx.fxml,javafx.web,javafx.media,javafx.swing --bind-services --output "%PATH_TO_JDK_FX%"
+
+set JAVA_HOME=%PATH_TO_JDK_FX%
+
+dir /s /b src\*.java > sources.txt & javac -d mods/hellofx @sources.txt & del sources.txt
+java --module-path mods -m hellofx/hellofx.HelloFX
+
+javac --module-path "%PATH_TO_FX_MODS%" --add-modules java.se,javafx.fxml,javafx.web,javafx.media,javafx.swing -d out/ytoolsfx @sources.txt
+
+java --module-path "%PATH_TO_FX_MODS%" --add-modules java.se,javafx.fxml,javafx.web,javafx.media,javafx.swing -d out/ytoolsfx @sources.txt
+
+java --module-path out -m hellofx/hellofx.HelloFX
+
+dir /s /b *.class > sources.txt
+```
 
 ## Destek ve İletişim
 
