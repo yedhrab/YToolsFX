@@ -30,7 +30,8 @@ Kişisel araçlarımı derlediğin JavaFX GUI'si.
 
 <kbd>Project Structures</kbd> kısmına erişme kısayolu: <kbd>CTRL</kbd> + <kbd>ALT</kbd> + <kbd>SHIFT</kbd> + <kbd>S</kbd>
 
-> Test için otomatize edilemsi lazım 😢
+> - Test için otomatize edilemsi lazım 😢
+> - Her panelin `fxml` dosyası ayrılıp ana `fxml`'e node olarak include edilecek (her fxml tek controller kabul ediyor 😢)
 
 ### Java 8 Ayarları
 
