@@ -8,7 +8,8 @@ Kişisel araçlarımı derlediğin JavaFX GUI'si.
 
 - [Tanıtım](#Tan%C4%B1t%C4%B1m)
 - [Hazırlanma](#Haz%C4%B1rlanma)
-  - [Java12 Fonksiyonları Aktif Etme](#Java12-Fonksiyonlar%C4%B1-Aktif-Etme)
+  - [Java 8 Ayarları](#Java-8-Ayarlar%C4%B1)
+  - [Java12 Ayarları](#Java12-Ayarlar%C4%B1)
   - [Dosyaları Yapılandırma](#Dosyalar%C4%B1-Yap%C4%B1land%C4%B1rma)
   - [Bağımlılıkları Dahil Etme](#Ba%C4%9F%C4%B1ml%C4%B1l%C4%B1klar%C4%B1-Dahil-Etme)
   - [Scene Builder ile Tasarım Ayarı](#Scene-Builder-ile-Tasar%C4%B1m-Ayar%C4%B1)
@@ -31,13 +32,26 @@ Kişisel araçlarımı derlediğin JavaFX GUI'si.
 
 > Test için otomatize edilemsi lazım 😢
 
-### Java12 Fonksiyonları Aktif Etme
+### Java 8 Ayarları
+
+- Direct olarak exe'yi artifact kısmından oluşturabilrisin
+- <kbd>Project Structures</kbd> + <kbd>Artifact</kbd> + <kbd>+</kbd> + <kbd>JavaFX Application</kbd>
+- `JavaFX` sekmesine gelin
+  - **Application Class** kısmından Main methodunuzu seçin (Application'ı extend etmeli)
+  - **Native Bundle**'dan istediğinizi seçin (olmazsa `all` deyin)
+
+### Java12 Ayarları
 
 <kbd>Project Structure</kbd> - <kbd>Project</kbd> alanına girin
 
 - **Project SDK** `java version 12.0.1`
 - **Project Language Level** - `12`
 - **Project compiler output** `~\YToolsJava\out`
+
+> Java 12 ile `exe` oluşturulması basit değil 😢
+>
+> - [JavaFX 12 exe oluşturma](https://medium.com/@adam_carroll/java-packager-with-jdk11-31b3d620f4a8)
+> - [Stackoverflow Sorusu](https://stackoverflow.com/questions/53453212/how-to-deploy-a-javafx-11-desktop-application-with-a-jre)
 
 ### Dosyaları Yapılandırma
 
