@@ -209,18 +209,13 @@ public abstract class YoutubeDownloader {
 
     public static ArrayList<String> getDatas(String type) {
         final ArrayList<String> wantedDataList = new ArrayList<>();
-        dataList.forEach(data ->
-                wantedDataList.add(
-                        switch (type) {
-                            case "formatCode" -> data.formatCode;
-                            case "extension" -> data.extension;
-                            case "type" -> data.type;
-                            case "resolution" -> data.resolution;
-                            case "size" -> data.size;
-                            default -> "";
-                        }
-                )
-        );
+        dataList.forEach(data -> wantedDataList.add(
+                type.equals("formatCode") ? data.formatCode :
+                        type.equals("extension") ? data.extension :
+                                type.equals("type") ? data.type :
+                                        type.equals("resolution") ? data.resolution :
+                                                type.equals("size") ? data.size : ""
+        ));
 
         return wantedDataList;
     }
