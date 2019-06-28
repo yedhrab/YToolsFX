@@ -22,7 +22,7 @@ Kişisel araçlarımı derlediğin JavaFX GUI'si.
 - Youtube üzerinden video / ses indirme
   - Videoları `Downloads` dizinine kaydeder.
 
-![app](res/app.gif)
+[![app](res/app.gif)](res/app.mp4)
 
 ## Hazırlanma
 
