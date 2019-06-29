@@ -54,7 +54,7 @@ public abstract class Utility {
     public static String[] createCommand(String prefix, String... commands) {
         ArrayList<String> commandList = new ArrayList<>(Arrays.asList(commands));
         commandList.add(0, prefix);
-        return commandList.toArray(String[]::new);
+        return commandList.toArray(new String[0]);
     }
 
     public static void openInDefaultBrowser(String url) throws URISyntaxException, IOException {
@@ -64,13 +64,29 @@ public abstract class Utility {
     }
 
     public static String formatDecimal(Double decimal, int digitNum) {
-        if (decimal == 0) return "0." + "0".repeat(digitNum - 1);
+        StringBuilder format = new StringBuilder();
+        if (decimal == 0) {
+            format.append("0.");
+            for (int i = 0; i < digitNum - 1; i++) {
+                format.append("0");
+            }
+            return format.toString();
+        }
 
         int lvl = (int) Math.log10(decimal);
-        String format = lvl >= 0 ? "#".repeat(lvl + 1) : "";
-        format += lvl - digitNum >= -1 ? "" : "." + "#".repeat(digitNum - lvl - 1);
+        if (lvl >= 0) {
+            for (int i = 0; i < lvl +1; i++ ) {
+                format.append("#");
+            }
+        }
+        if (!(lvl - digitNum >= -1)) {
+            format.append(".");
+            for (int i = 0; i < digitNum - lvl - 1; i++) {
+                format.append("#");
+            }
+        }
 
-        return new DecimalFormat(format).format(decimal);
+        return new DecimalFormat(format.toString()).format(decimal);
     }
 
     public static Image createImage(String filePath) {

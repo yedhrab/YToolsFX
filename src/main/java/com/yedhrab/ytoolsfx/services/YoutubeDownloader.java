@@ -2,12 +2,10 @@ package com.yedhrab.ytoolsfx.services;
 
 import com.yedhrab.ytoolsfx.interfaces.ProcessEvent;
 import javafx.application.Platform;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.ProgressIndicator;
-import javafx.scene.control.Slider;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 
+import javax.rmi.CORBA.Util;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -154,7 +152,7 @@ public abstract class YoutubeDownloader {
         return url != null && selectedAvailableIndex >= 0;
     }
 
-    public static void download(DownloadEvent de, ProgressIndicator progressIndicator, Label installationSize) throws IOException {
+    public static void download(DownloadEvent de, ProgressBar progressIndicator, Label installationSize, Label installationSpeed) throws IOException {
         // TODO: iptal edilebilir olmalı
 
         String[] commands = {
@@ -170,7 +168,8 @@ public abstract class YoutubeDownloader {
                 DownloadData data = parseDownloadOutput(output);
                 Platform.runLater(() -> {
                     progressIndicator.setProgress(data.ratio);
-                    installationSize.setText(Utility.formatDecimal(data.size, 4));
+                    installationSize.setText(Utility.formatDecimal(data.size, 4) + " MB");
+                    installationSpeed.setText(Utility.formatDecimal(data.speed, 3) + " MB/s");
                     // TODO: yükleme hızı
                 });
             }

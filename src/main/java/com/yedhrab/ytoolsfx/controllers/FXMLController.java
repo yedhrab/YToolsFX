@@ -26,7 +26,7 @@ public class FXMLController {
     private ImageView iv_drive, iv_info, iv_youtube, ivYoutubeVideoPreview, ivDownloadFinished;
 
     @FXML
-    private Label labelFileSize, labelInstallationSize;
+    private Label labelFileSize, labelInstallationSize, labelInstallationSpeed;
 
     @FXML
     private Text txtVideoName;
@@ -47,7 +47,7 @@ public class FXMLController {
 
 
     @FXML
-    private ProgressIndicator downloadProgress;
+    private ProgressBar downloadProgress;
 
     @FXML
     private TextField txt_gDriveLink, txt_directLink;
@@ -115,19 +115,22 @@ public class FXMLController {
 
                 Platform.runLater(() -> {
                     downloadProgress.setProgress(0);
-                    labelInstallationSize.setText("MB");
+                    labelInstallationSize.setText("0.000 MB");
+                    labelInstallationSpeed.setText("0.00 MB/s");
 
                     paneDownloadSettings.setDisable(true);
                     buttonDownload.setVisible(false);
                     labelInstallationSize.setVisible(true);
+                    labelInstallationSpeed.setVisible(true);
                     downloadProgress.setVisible(true);
                 });
 
                 YoutubeDownloader.download(() -> Platform.runLater(() -> {
                     downloadProgress.setVisible(false);
                     labelInstallationSize.setVisible(false);
+                    labelInstallationSpeed.setVisible(false);
                     ivDownloadFinished.setVisible(true);
-                }),downloadProgress, labelInstallationSize);
+                }),downloadProgress, labelInstallationSize, labelInstallationSpeed);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -145,7 +148,7 @@ public class FXMLController {
 
         new Thread(() -> {
             try {
-                String url = "https://www.youtube.com/watch?v=_VuyDiLEjOs"; // Utility.getClipboard();
+                String url = Utility.getClipboard();
                 YoutubeDownloader.loadVideo(url);
 
                 Image thumbnail;
@@ -168,7 +171,7 @@ public class FXMLController {
                 }
                 Platform.runLater(() -> ivYoutubeVideoPreview.setImage(thumbnail));
 
-            } catch (IOException e) {
+            } catch (IOException | UnsupportedFlavorException e) {
                 e.printStackTrace();
             }
 
@@ -194,6 +197,7 @@ public class FXMLController {
 
         downloadProgress.setVisible(false);
         labelInstallationSize.setVisible(false);
+        labelInstallationSpeed.setVisible(false);
         ivDownloadFinished.setVisible(false);
 
         buttonDownload.setVisible(true);
