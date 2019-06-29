@@ -1,0 +1,51 @@
+/*#pane{*/
+/*    -fx-background-image: url("/images/clipboard_icon.png");*/
+/*    -fx-background-repeat: stretch;*/
+/*    -fx-background-size: 46 46;*/
+/*    -fx-background-position: center center;*/
+/*    -fx-effect: dropshadow(three-pass-box, black, 30, 0.5, 0, 0);*/
+/*}*/
+
+.inVisible {
+    -fx-background-color: transparent;
+}
+
+.anchorPane {
+    -fx-background-color:  #3D3956;
+}
+
+#paste {
+    -fx-background-image: url("/images/clipboard_icon.png");
+}
+
+#clear {
+    -fx-background-image: url("/images/clear_icon.png");
+}
+
+#download {
+    -fx-background-image: url("/images/download.png");
+}
+
+#quick {
+    -fx-background-image: url("/images/quick_mode.png");
+}
+
+.button{
+    -fx-background-repeat: stretch;
+    -fx-background-position: center center;
+    -fx-background-size: 49 49;
+    -fx-border-color: transparent;
+    -fx-background-color: transparent;
+    -fx-border-width: 0;
+    -fx-background-radius: 0;
+}
+
+.button:focused {
+    -fx-border-color: transparent;
+    -fx-border-radius: 0, 0;
+    -fx-effect: dropshadow(three-pass-box, #1A1956, 10, 0.5, 0, 0);
+}
+
+.button:pressed {
+    -fx-effect: dropshadow(three-pass-box, #1A1956, 20, 0.7, 0, 0);
+}
