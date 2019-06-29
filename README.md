@@ -41,6 +41,8 @@ Kişisel araçlarımı derlediğin JavaFX GUI'si.
   - **Application Class** kısmından Main methodunuzu seçin (Application'ı extend etmeli)
   - **Native Bundle**'dan istediğinizi seçin (olmazsa `all` deyin)
 
+> [Buradan](https://www.youtube.com/watch?v=iR85RRep-Po&t=299s) deploy etmeye bakabilrisin
+
 ### Java12 Ayarları
 
 <kbd>Project Structure</kbd> - <kbd>Project</kbd> alanına girin
