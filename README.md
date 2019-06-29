@@ -8,7 +8,8 @@ Kişisel araçlarımı derlediğin JavaFX GUI'si.
 
 - [Tanıtım](#Tan%C4%B1t%C4%B1m)
 - [Hazırlanma](#Haz%C4%B1rlanma)
-  - [Java8 ile Deploy Ayarları](#Java8-ile-Deploy-Ayarlar%C4%B1)
+  - [Java8 için Hazırlama](#Java8-i%C3%A7in-Haz%C4%B1rlama)
+  - [Java8 ile Dışarı aktarma (Deploy)](#Java8-ile-D%C4%B1%C5%9Far%C4%B1-aktarma-Deploy)
   - [Java12 Ayarları](#Java12-Ayarlar%C4%B1)
   - [Dosyaları Yapılandırma](#Dosyalar%C4%B1-Yap%C4%B1land%C4%B1rma)
   - [Bağımlılıkları Dahil Etme](#Ba%C4%9F%C4%B1ml%C4%B1l%C4%B1klar%C4%B1-Dahil-Etme)
@@ -35,19 +36,29 @@ Kişisel araçlarımı derlediğin JavaFX GUI'si.
 > - Test için otomatize edilemsi lazım 😢
 > - Her panelin `fxml` dosyası ayrılıp ana `fxml`'e node olarak include edilecek (her fxml tek controller kabul ediyor 😢)
 
-### Java8 ile Deploy Ayarları
+### Java8 için Hazırlama
 
 Direct olarak exe'yi **artifact** kısmından oluşturabilrisin
 
-- **Project SDK** `java version 8.0.1`
+- **Project SDK** `1.8 (java version 1.8.0_212)`
 - **Project Language Level** - `8`
 - **Project compiler output** `~\YToolsJava\out`
-- <kbd>Project Structures</kbd> + <kbd>Artifact</kbd> + <kbd>+</kbd> + <kbd>JavaFX Application</kbd>
+- **Modules** sekmesinden **Dependencies**, **Module SDK** `1.8`
+
+### Java8 ile Dışarı aktarma (Deploy)
+
+<kbd>Project Structures</kbd> + <kbd>Artifact</kbd> + <kbd>+</kbd> + <kbd>JavaFX Application</kbd>
+
 - `JavaFX` sekmesine gelin
-  - **Application Class** kısmından Main methodunuzu seçin (Application'ı extend etmeli)
-  - **Native Bundle**'dan istediğinizi seçin (olmazsa `all` deyin)
+- Tüm **available elements** verilerini `YToolsFX sources` alanına ekleyin
+- Manifest dosyası `src` altındadır
+- MainApp yolu `com.yedhrab.ytoolsfx.applications.MainApp`
+- **Application Class** kısmından Main methodunuzu seçin (Application'ı extend etmeli)
+- **Native Bundle**'dan istediğinizi seçin (olmazsa `all` deyin)
 
 > [Buradan](https://www.youtube.com/watch?v=iR85RRep-Po&t=299s) deploy etmeye bakabilrisin
+
+![](res/java8_deploy.png)
 
 ### Java12 Ayarları
 
