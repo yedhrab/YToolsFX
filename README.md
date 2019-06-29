@@ -2,7 +2,7 @@
 
 Kişisel araçlarımı derlediğin JavaFX GUI'si.
 
-> Java 12'nin son sürümü ile yazılmıştır, JDK 8 ile deploy edilmiştir. ([buradan](https://github.com/yedhrab/YToolsFX/releases/download/1.0.0/YToolsFX.rar) veya release sayfasından indirebilirsin)
+> Java 12'nin son sürümü ile yazılmıştır, JDK 8 ile deploy edilmiştir. ([buradan](https://github.com/yedhrab/YToolsFX/releases/download/1.0.0/YToolsFX.rar) veya [release](https://github.com/yedhrab/YToolsFX/releases) sayfasından indirebilirsin)
 
 ## İçerikler <!-- omit in toc -->
 
