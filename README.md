@@ -8,12 +8,14 @@ Kişisel araçlarımı derlediğin JavaFX GUI'si.
 
 - [Tanıtım](#Tan%C4%B1t%C4%B1m)
 - [Hazırlanma](#Haz%C4%B1rlanma)
-  - [Java 8 Ayarları](#Java-8-Ayarlar%C4%B1)
+  - [Java8 ile Deploy Ayarları](#Java8-ile-Deploy-Ayarlar%C4%B1)
   - [Java12 Ayarları](#Java12-Ayarlar%C4%B1)
   - [Dosyaları Yapılandırma](#Dosyalar%C4%B1-Yap%C4%B1land%C4%B1rma)
   - [Bağımlılıkları Dahil Etme](#Ba%C4%9F%C4%B1ml%C4%B1l%C4%B1klar%C4%B1-Dahil-Etme)
+  - [Maven Yapısı](#Maven-Yap%C4%B1s%C4%B1)
   - [Scene Builder ile Tasarım Ayarı](#Scene-Builder-ile-Tasar%C4%B1m-Ayar%C4%B1)
   - [Derleme Yapılandırması](#Derleme-Yap%C4%B1land%C4%B1rmas%C4%B1)
+    - [Maven Derleme Paneli](#Maven-Derleme-Paneli)
 - [Ek Scriptler](#Ek-Scriptler)
 - [Destek ve İletişim](#Destek-ve-%C4%B0leti%C5%9Fim)
 
@@ -33,9 +35,13 @@ Kişisel araçlarımı derlediğin JavaFX GUI'si.
 > - Test için otomatize edilemsi lazım 😢
 > - Her panelin `fxml` dosyası ayrılıp ana `fxml`'e node olarak include edilecek (her fxml tek controller kabul ediyor 😢)
 
-### Java 8 Ayarları
+### Java8 ile Deploy Ayarları
 
-- Direct olarak exe'yi artifact kısmından oluşturabilrisin
+Direct olarak exe'yi **artifact** kısmından oluşturabilrisin
+
+- **Project SDK** `java version 8.0.1`
+- **Project Language Level** - `8`
+- **Project compiler output** `~\YToolsJava\out`
 - <kbd>Project Structures</kbd> + <kbd>Artifact</kbd> + <kbd>+</kbd> + <kbd>JavaFX Application</kbd>
 - `JavaFX` sekmesine gelin
   - **Application Class** kısmından Main methodunuzu seçin (Application'ı extend etmeli)
@@ -68,11 +74,14 @@ Kişisel araçlarımı derlediğin JavaFX GUI'si.
 
 Proje [JavaFX] ve [JFoenix] framework'ü ve [Gluonhq charm-glisten] modülü ile yapılmıştır.
 
-- [JavaFX], [JFoenix] paketlerini indirin
-- [Gluonhq charm-glisten] jar dosyasını indirin _(v6.0.0)_
-- <kbd>Project Structure</kbd> - <kbd>Modules</kbd> - <kbd>+</kbd> - <kbd>Library</kbd> ile JavaFX'in lib, JFoenix'in kendisini ve `charm-glisten-6.0.0.jar` dosyasını ekleyin
+- `pom.xml` dosyasında tüm modülleri indirin
+- Video indirme aracı olan [youtube-dl]'i kurun
 
-> Youtube indirici için [youtube-dl](https://yt-dl.org/downloads/2019.06.21/youtube-dl.exe) ve onun gerek duyduğu [Microsoft Visual C++ 2010 Redistributable Package (x86)](https://download.microsoft.com/download/5/B/C/5BC5DBB3-652D-4DCE-B14A-475AB85EEF6E/vcredist_x86.exe) paketi gereklidir.
+> Youtube indirici için [youtube-dl]'in gerek duyduğu [Microsoft Visual C++ 2010 Redistributable Package (x86)](https://download.microsoft.com/download/5/B/C/5BC5DBB3-652D-4DCE-B14A-475AB85EEF6E/vcredist_x86.exe) paketi gereklidir.
+
+### Maven Yapısı
+
+![](res/intellij_maven_structure.png)
 
 ### Scene Builder ile Tasarım Ayarı
 
@@ -85,15 +94,25 @@ Proje [JavaFX] ve [JFoenix] framework'ü ve [Gluonhq charm-glisten] modülü ile
 
 ### Derleme Yapılandırması
 
-<kbd>Edit configuration</kbd> alanına girin
+**Run/Debug configuration** (ya da edit configuration) alanına girin
 
-- **Main class** yerine `application.MainApp` yazın
-- **VM Options** alanına alttaki metni yazın:
-  - `--module-path "C:\Program Files\Java\javafx-sdk-12.0.1\lib" --add-modules=javafx.controls,javafx.fxml`
+- <kbd>+</kbd>'ya basıp <kbd>Maven</kbd> yazısına tıklayın
+- **Command Line** alanına `javafx:run` yazın
+- **Before launch: Activate Tool Window** alanından
+- <kbd>+</kbd> + <kbd>Run Maven Goal</kbd>
+  - **Command Line** kısmına `javafx:compile` yazın
 
-> `C:\Program Files\Java\javafx-sdk-12.0.1` yerine sizin kendi JavaFX SDK yolunuzu yazın.
+#### Maven Derleme Paneli
+
+Sağ kenardaki panelde yer alan **Mavem** yazısına basar maven ile derleme panelini açabilirsin.
+
+> Uygulamamız javafx olduğundan, _Plugins/javafx_ alanındaki derleme eylemlerini kullanabilirsin
+
+![](res/maven_plugins.png)
 
 ## Ek Scriptler
+
+> Gerekli değildir, hiç kafa yormayın 😅
 
 ```bat
 set PATH_TO_FX_MODS=C:\Program Files\Java\javafx-jmods-12.0.1
@@ -129,11 +148,6 @@ dir /s /b *.class > sources.txt
 
 [![Patreon](https://drive.google.com/uc?id=11YmCRmySX7v7QDFS62ST2JZuE70RFjDG)][bağış aylık]
 
-[javafx]: http://gluonhq.com/download/javafx-12-0-1-sdk-windows/
-[jfoenix]: https://search.maven.org/remotecontent?filepath=com/jfoenix/jfoenix/9.0.8/jfoenix-9.0.8.jar
-[gluonhq charm-glisten]: https://nexus.gluonhq.com/nexus/content/repositories/releases/com/gluonhq/charm-glisten/
-[scene builder]: https://gluonhq.com/products/scene-builder/thanks/?dl=/download/scene-builder-11-windows-x64/
-
 <!-- İletişim -->
 
 [mail]: mailto::yedhrab@gmail.com?subject=YBilgiler%20%7C%20Github
@@ -144,3 +158,9 @@ dir /s /b *.class > sources.txt
 [bağış aylık]: https://www.patreon.com/yemreak/
 
 <!-- İletişim Sonu -->
+
+[javafx]: http://gluonhq.com/download/javafx-12-0-1-sdk-windows/
+[jfoenix]: https://search.maven.org/remotecontent?filepath=com/jfoenix/jfoenix/9.0.8/jfoenix-9.0.8.jar
+[gluonhq charm-glisten]: https://nexus.gluonhq.com/nexus/content/repositories/releases/com/gluonhq/charm-glisten/
+[scene builder]: https://gluonhq.com/products/scene-builder/thanks/?dl=/download/scene-builder-11-windows-x64/
+[youtube-dl]: https://yt-dl.org/downloads/2019.06.21/youtube-dl.exe
