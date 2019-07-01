@@ -24,7 +24,7 @@ public class MainApp extends Application {
 
         primaryStage.initStyle(StageStyle.TRANSPARENT); // Windows çerçevesini kaldırır
 
-        primaryStage.setTitle("Hello World");
+        primaryStage.setTitle("YTools");
         primaryStage.setScene(new Scene(root));
         primaryStage.getScene().setFill(Color.TRANSPARENT);
         primaryStage.show();
