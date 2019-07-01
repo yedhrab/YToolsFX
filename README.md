@@ -1,4 +1,4 @@
-# YToolsJava <!-- omit in toc -->
+# YToolsFX <!-- omit in toc -->
 
 Kişisel araçlarımı derlediğin JavaFX GUI'si.
 
